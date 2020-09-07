@@ -74,9 +74,9 @@ jobs:
       - name: Convert to JKS Keystore
         run: keytool -importkeystore -deststorepass ${{ secrets.ANDROID_SIGNING_KEYSTORE_PASS }} -destkeystore keystore.jks -srckeystore keystore.p12 -srcstoretype PKCS12 -deststoretype JKS
       - name: Add keystore path to Gradle
-        run: cat "\nRELEASE_STORE_FILE=${{ github.workspace }}/android/keystore.jks" > gradle.properties
+        run: cat "RELEASE_STORE_FILE=${{ github.workspace }}/android/keystore.jks" > key.properties
       - name: Add other signing properties to Gradle
-        run: cat "\n${{ secrets.ANDROID_SIGNING_PROPERTIES }}" > gradle.properties
+        run: cat "\n${{ secrets.ANDROID_SIGNING_PROPERTIES }}" > key.properties
       - name: Build Debug APK
         run: cd android && bash ./gradlew :app:assembleRelease
       - name: Upload APK
@@ -134,9 +134,9 @@ jobs:
       - name: Convert to JKS Keystore
         run: keytool -importkeystore -deststorepass ${{ secrets.ANDROID_SIGNING_KEYSTORE_PASS }} -destkeystore keystore.jks -srckeystore keystore.p12 -srcstoretype PKCS12 -deststoretype JKS
       - name: Add keystore path to Gradle
-        run: cat "\nRELEASE_STORE_FILE=${{ github.workspace }}/android/keystore.jks" > gradle.properties
+        run: cat "RELEASE_STORE_FILE=${{ github.workspace }}/android/keystore.jks" > key.properties
       - name: Add other signing properties to Gradle
-        run: cat "\n${{ secrets.ANDROID_SIGNING_PROPERTIES }}" > gradle.properties
+        run: cat "\n${{ secrets.ANDROID_SIGNING_PROPERTIES }}" > key.properties
       - name: Build Debug APK
         run: cd android && bash ./gradlew :app:assembleRelease
       - name: Upload APK
