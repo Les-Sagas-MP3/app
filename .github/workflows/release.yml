@@ -65,6 +65,18 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
+      - name: Set private key
+        run: cat "${{ secrets.ANDROID_SIGNING_KEY_PRIV }}" > android-signing-key.key
+      - name: Set public key
+        run: cat "${{ secrets.ANDROID_SIGNING_KEY_PUB }}" > android-signing-key.pem
+      - name: Create PKCS12 Keystore
+        run: openssl pkcs12 -export -in android-signing-key.pem -inkey android-signing-key.key -name "lessagasmp3" -out keystore.p12
+      - name: Convert to JKS Keystore
+        run: keytool -importkeystore -deststorepass ${{ secrets.ANDROID_SIGNING_KEYSTORE_PASS }} -destkeystore keystore.jks -srckeystore keystore.p12 -srcstoretype PKCS12 -deststoretype JKS
+      - name: Add keystore path to Gradle
+        run: cat "\nRELEASE_STORE_FILE=${{ github.workspace }}/android/keystore.jks" > gradle.properties
+      - name: Add other signing properties to Gradle
+        run: cat "\n${{ secrets.ANDROID_SIGNING_PROPERTIES }}" > gradle.properties
       - name: Build Debug APK
         run: cd android && bash ./gradlew :app:assembleRelease
       - name: Upload APK
@@ -113,6 +125,18 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
+      - name: Set private key
+        run: cat "${{ secrets.ANDROID_SIGNING_KEY_PRIV }}" > android-signing-key.key
+      - name: Set public key
+        run: cat "${{ secrets.ANDROID_SIGNING_KEY_PUB }}" > android-signing-key.pem
+      - name: Create PKCS12 Keystore
+        run: openssl pkcs12 -export -in android-signing-key.pem -inkey android-signing-key.key -name "lessagasmp3" -out keystore.p12
+      - name: Convert to JKS Keystore
+        run: keytool -importkeystore -deststorepass ${{ secrets.ANDROID_SIGNING_KEYSTORE_PASS }} -destkeystore keystore.jks -srckeystore keystore.p12 -srcstoretype PKCS12 -deststoretype JKS
+      - name: Add keystore path to Gradle
+        run: cat "\nRELEASE_STORE_FILE=${{ github.workspace }}/android/keystore.jks" > gradle.properties
+      - name: Add other signing properties to Gradle
+        run: cat "\n${{ secrets.ANDROID_SIGNING_PROPERTIES }}" > gradle.properties
       - name: Build Debug APK
         run: cd android && bash ./gradlew :app:assembleRelease
       - name: Upload APK
