@@ -4,9 +4,11 @@ import { LoadingController } from '@ionic/angular';
 import { forkJoin } from 'rxjs';
 import { Category } from 'src/app/entities/category';
 import { Saga } from 'src/app/entities/saga';
+import { Season } from 'src/app/entities/season';
 import { AuthorService } from 'src/app/services/authors/author.service';
 import { CategoryService } from 'src/app/services/categories/category.service';
 import { SagaService } from 'src/app/services/sagas/saga.service';
+import { SeasonService } from 'src/app/services/seasons/season.service';
 
 @Component({
   selector: 'app-view-saga',
@@ -22,7 +24,8 @@ export class ViewSagaPage implements OnInit {
     public loadingController: LoadingController,
     public authorService: AuthorService,
     public categoryService: CategoryService,
-    private sagaService: SagaService) { }
+    private sagaService: SagaService,
+    private seasonService: SeasonService) { }
 
   ngOnInit() {
     var itemId: number = +this.activatedRoute.snapshot.paramMap.get('id');
@@ -35,9 +38,11 @@ export class ViewSagaPage implements OnInit {
           this.item = Saga.fromModel(data);
           let categories = this.categoryService.getAllByIds(data.categoriesRef);
           let authors = this.authorService.getAllByIds(data.authorsRef);
-          forkJoin([authors, categories]).subscribe(results => {
+          let seasons = this.seasonService.getAllByIds(data.seasonsRef);
+          forkJoin([authors, categories, seasons]).subscribe(results => {
             this.item.authors = results[0];
             this.item.categories = Category.fromModels(results[1]);
+            this.item.seasons = Season.fromModels(results[2]);
             loading.dismiss();
           });
         });
@@ -45,8 +50,8 @@ export class ViewSagaPage implements OnInit {
   }
 
   backgroundImage(): string {
-    if(this.item.backgroundUrl) {
-      return 'url(' + this.item.backgroundUrl + ')';
+    if(this.item.bannerUrl) {
+      return 'url(' + this.item.bannerUrl + ')';
     } else {
       return '';
     }

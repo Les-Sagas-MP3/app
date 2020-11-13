@@ -3,7 +3,14 @@ import { AuditModel } from './audit.model';
 export class SagaModel extends AuditModel {
 
     title: string = '';
-    backgroundUrl: string = '';
+    status: string = '';
+    startDate: Date = new Date();
+    duration: number = 0;
+    synopsis: string = '';
+    origin: string = '';
+    genese: string = '';
+    awards: string = '';
+    bannerUrl: string = '';
     coverUrl: string = '';
     url: string = '';
     urlWiki: string = '';
@@ -13,7 +20,10 @@ export class SagaModel extends AuditModel {
     urlReviews: string = '';
     nbBravos: number = 0;
     authorsRef: number[] = [];
+    composersRef: number[] = [];
     categoriesRef: number[] = [];
     seasonsRef: number[] = [];
+    distributionEntriesRef: number[] = [];
+    anecdotesRef: number[] = [];
 
 }

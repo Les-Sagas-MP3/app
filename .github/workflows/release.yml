@@ -166,6 +166,7 @@ jobs:
 
   deploy-production:
     needs: [verify-version, release]
+    name: Deploy to production
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

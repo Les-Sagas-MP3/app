@@ -4,6 +4,7 @@ import { Category } from './category';
 import { Season } from './season';
 
 export class Saga extends SagaModel {
+    
     authors: Author[] = []
     categories: Category[] = []
     seasons: Season[] = []
@@ -16,7 +17,14 @@ export class Saga extends SagaModel {
         entity.updatedAt = model.updatedAt;
         entity.updatedBy = model.updatedBy;
         entity.title = model.title;
-        entity.backgroundUrl = model.backgroundUrl;
+        entity.status = model.status;
+        entity.startDate = model.startDate;
+        entity.duration = model.duration;
+        entity.synopsis = model.synopsis;
+        entity.origin = model.origin;
+        entity.genese = model.genese;
+        entity.awards = model.awards;
+        entity.bannerUrl = model.bannerUrl;
         entity.coverUrl = model.coverUrl;
         entity.url = model.url;
         entity.urlWiki = model.urlWiki;
@@ -26,8 +34,11 @@ export class Saga extends SagaModel {
         entity.urlReviews = model.urlReviews;
         entity.nbBravos = model.nbBravos;
         entity.authorsRef = model.authorsRef;
+        entity.composersRef = model.composersRef;
         entity.categoriesRef = model.categoriesRef;
         entity.seasonsRef = model.seasonsRef;
+        entity.distributionEntriesRef = model.distributionEntriesRef;
+        entity.anecdotesRef = model.anecdotesRef;
         return entity;
     }
 

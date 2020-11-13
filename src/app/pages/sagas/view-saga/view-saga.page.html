@@ -70,8 +70,10 @@
             <ion-list-header>
                 <ion-label>Saisons</ion-label>
             </ion-list-header>
-            <ion-item>
-                {{ item.seasonsRef }}
+            <ion-item *ngFor="let season of item.seasons">
+                <ion-label>
+                    <h2>Saison {{ season.number }} {{ season.name }}</h2>
+                </ion-label>
             </ion-item>
         </div>
     </ion-list>
