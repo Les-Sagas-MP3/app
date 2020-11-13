@@ -1,6 +1,6 @@
 {
     "name": "les-sagas-mp3",
-    "version": "0.2.2",
+    "version": "0.2.3",
     "author": "Les Sagas MP3",
     "homepage": "https://github.com/Les-Sagas-MP3",
     "scripts": {
@@ -19,7 +19,7 @@
         "@angular/platform-browser": "~11.0.0",
         "@angular/platform-browser-dynamic": "~11.0.0",
         "@angular/router": "~11.0.0",
-        "@capacitor/android": "^2.4.0",
+        "@capacitor/android": "^2.4.2",
         "@capacitor/core": "2.4.2",
         "@ionic-native/core": "^5.0.0",
         "@ionic-native/device-accounts": "^5.28.0",
@@ -38,7 +38,7 @@
         "@angular/compiler": "~11.0.0",
         "@angular/compiler-cli": "~11.0.0",
         "@angular/language-service": "~11.0.0",
-        "@capacitor/cli": "2.4.0",
+        "@capacitor/cli": "2.4.2",
         "@ionic/angular-toolkit": "^2.3.0",
         "@types/jasmine": "~3.6.1",
         "@types/jasminewd2": "~2.0.3",
