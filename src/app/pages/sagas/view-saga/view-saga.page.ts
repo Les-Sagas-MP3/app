@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { forkJoin } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Category } from 'src/app/entities/category';
 import { Saga } from 'src/app/entities/saga';
 import { Season } from 'src/app/entities/season';
@@ -49,9 +50,17 @@ export class ViewSagaPage implements OnInit {
     });
   }
 
-  backgroundImage(): string {
+  bannerUrl(): string {
     if(this.item.bannerUrl) {
-      return 'url(' + this.item.bannerUrl + ')';
+      return 'url(' + environment.webUrl + this.item.bannerUrl + ')';
+    } else {
+      return '';
+    }
+  }
+
+  coverUrl(): string {
+    if(this.item.coverUrl) {
+      return environment.webUrl + this.item.coverUrl;
     } else {
       return '';
     }

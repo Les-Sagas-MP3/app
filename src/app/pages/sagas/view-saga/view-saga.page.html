@@ -10,7 +10,7 @@
 
 <ion-content>
 
-    <div class="background" [ngStyle]="{'background-image': backgroundImage()}">
+    <div class="background" [ngStyle]="{'background-image': bannerUrl()}">
         <div class="background-left-buttons">
             <ion-button *ngIf="item.url" color="light" href="{{ item.url }}">
                 <ion-icon slot="start" name="globe"></ion-icon>
@@ -21,7 +21,7 @@
                 Wiki
             </ion-button>
         </div>
-        <ion-img class="cover" [src]="item.coverUrl"></ion-img>
+        <ion-img class="cover" [src]="coverUrl()"></ion-img>
     </div>
     <ion-list>
         <ion-item lines="none">
