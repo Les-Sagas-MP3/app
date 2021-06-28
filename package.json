@@ -28,7 +28,7 @@
     "@ionic/angular": "^5.6.10",
     "cordova-device-accounts-v2": "^2.0.8",
     "ionic": "^5.4.16",
-    "rxjs": "~6.6.3",
+    "rxjs": "~6.6.7",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.4"
   },
