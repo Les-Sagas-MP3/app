@@ -29,7 +29,7 @@
     "cordova-device-accounts-v2": "^2.0.8",
     "ionic": "^5.4.16",
     "rxjs": "~6.6.3",
-    "tslib": "^2.0.0",
+    "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
