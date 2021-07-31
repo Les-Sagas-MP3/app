@@ -10,8 +10,8 @@ SCRIPT_LOCATION=$WORKSPACE/.release/
 # Set asset file
 echo '''
 {
-    "webUrl": "http://localhost:8100",
-    "apiUrl": "https://1ac478f74140.ngrok.io/api"
+    "webUrl": "https://app.les-sagas-mp3.fr",
+    "apiUrl": "https://api.les-sagas-mp3.fr"
 }
 ''' > $WORKSPACE/android/app/src/main/assets/public/assets/config.json
 
