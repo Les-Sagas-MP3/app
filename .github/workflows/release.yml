@@ -58,10 +58,11 @@ jobs:
       run: ionic build --configuration=heroku-fr
     - name: Sync Ionic with Android
       run: ionic cap sync
-    - name: Set up JDK 1.8
-      uses: actions/setup-java@v1
+    - name: Set up JDK
+      uses: actions/setup-java@v2
       with:
-        java-version: 1.8
+        distribution: 'adopt'
+        java-version: '11'
     - name: Release Android APK
       run: ./.release/release_android.sh
       env:
@@ -130,10 +131,11 @@ jobs:
       shell: bash
       env:
         GOOGLE_SERVICES : ${{ secrets.GOOGLE_SERVICES }}
-    - name: Set up JDK 1.8
-      uses: actions/setup-java@v1
+    - name: Set up JDK
+      uses: actions/setup-java@v2
       with:
-        java-version: 1.8
+        distribution: 'adopt'
+        java-version: '11'
     - name: Release Android APK
       run: ./.release/release_android.sh
       env:
