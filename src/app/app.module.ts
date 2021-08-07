@@ -47,7 +47,7 @@ const appConfig = (config: ConfigService) => {
       useFactory: appConfig,
       multi: true,
       deps: [ConfigService],
-    },
+    }
   ],
   bootstrap: [AppComponent]
 })

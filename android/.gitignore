@@ -1,11 +1,8 @@
-# NPM renames .gitignore to .npmignore
-# In order to prevent that, we remove the initial "."
-# And the CLI then renames it
-
-# Using Android gitignore template: https://github.com/github/gitignore/blob/master/Android.gitignore
+# Using Android gitignore template: https://github.com/github/gitignore/blob/HEAD/Android.gitignore
 
 # Built application files
 *.apk
+*.aar
 *.ap_
 *.aab
 
@@ -19,7 +16,8 @@
 bin/
 gen/
 out/
-release/
+#  Uncomment the following line in case you need and you don't have the release build type files in your app
+# release/
 
 # Gradle files
 .gradle/
@@ -42,7 +40,6 @@ captures/
 
 # IntelliJ
 *.iml
-.idea
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/gradle.xml
@@ -54,6 +51,7 @@ captures/
 .idea/modules.xml
 # Comment next line if keeping position of elements in Navigation Editor is relevant for you
 .idea/navEditor.xml
+.idea
 
 # Keystore files
 # Uncomment the following lines if you do not want to check your keystore files in.
@@ -62,6 +60,10 @@ captures/
 
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
+.cxx/
+
+# Google Services (e.g. APIs or Firebase)
+# google-services.json
 
 # Freeline
 freeline.py
@@ -84,6 +86,9 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+
+# Android Profiling
+*.hprof
 
 # Cordova plugins for Capacitor
 capacitor-cordova-android-plugins
