@@ -39,6 +39,13 @@ export class AuthService {
     this.currentUserSubject.next(user);
   }
 
+  signup(email: string, password: string) : Observable<void> {
+    var jwtRequest = new JwtRequestModel();
+    jwtRequest.email = email;
+    jwtRequest.password = password;
+    return this.http.post<any>(`${this.configService.get('apiUrl')}/auth/signup`, jwtRequest);
+  }
+  
   login(email: string, password: string) : Observable<JwtResponseModel> {
     var jwtRequest = new JwtRequestModel();
     jwtRequest.email = email;

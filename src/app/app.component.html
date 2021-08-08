@@ -2,39 +2,63 @@
     <ion-split-pane contentId="main-content">
         <ion-menu contentId="main-content" type="overlay">
             <ion-content>
-                <ion-list id="side_menu">
-                    <ion-avatar *ngIf="authService.currentTokenValue">
-                        <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-                    </ion-avatar>
-                    <ion-list-header *ngIf="authService.currentTokenValue">
-                        Compte : {{ authService.currentUserValue.username }}
-                    </ion-list-header>
-
+                <ion-list id="side_menu" lines="none">
+                    <ion-list-header>Base de données</ion-list-header>
                     <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-                        <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" [class.selected]="selectedIndex == i">
+                        <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected" >
                             <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
                             <ion-label>{{ p.title }}</ion-label>
                         </ion-item>
                     </ion-menu-toggle>
+                </ion-list>
+
+                <ion-list *ngIf="authService.currentTokenValue" lines="none">
+                    <ion-list-header>
+                        Compte : {{ authService.currentUserValue.username }}
+                    </ion-list-header>
 
                     <ion-menu-toggle *ngIf="authService.currentTokenValue" auto-hide="false">
-                        <ion-item (click)="selectedIndex = -2" routerDirection="root" routerLink="sync" lines="none" detail="false" [class.selected]="selectedIndex == -2">
+                        <ion-item routerLink="/sync" routerLinkActive="selected" routerDirection="root" detail="false">
                             <ion-icon slot="start" name="cog"></ion-icon>
                             <ion-label>Administration</ion-label>
                         </ion-item>
                     </ion-menu-toggle>
 
-                    <ion-menu-toggle id="login_button" auto-hide="false">
-                        <ion-item *ngIf="!authService.currentTokenValue" (click)="selectedIndex = -1" routerDirection="root" routerLink="/login" lines="none" detail="false" [class.selected]="selectedIndex == -1">
-                            <ion-icon slot="start" name="person-circle"></ion-icon>
-                            <ion-label>Se connecter</ion-label>
+                    <ion-menu-toggle autoHide="false">
+                        <ion-item button (click)="logout()" detail="false" routerLinkActive="active" routerLinkActive="selected">
+                            <ion-icon slot="start" name="log-out"></ion-icon>
+                            <ion-label>
+                                Se déconnecter
+                            </ion-label>
                         </ion-item>
-                        <ion-item *ngIf="authService.currentTokenValue" (click)="logout()" lines="none" detail="false" [class.selected]="selectedIndex == -1">
-                            <ion-icon slot="start" name="person-circle"></ion-icon>
-                            <ion-label>Se déconnecter</ion-label>
+                    </ion-menu-toggle>
+
+                </ion-list>
+
+                <ion-list *ngIf="!authService.currentTokenValue" lines="none">
+                    <ion-list-header>
+                        Espace membre
+                    </ion-list-header>
+
+                    <ion-menu-toggle autoHide="false">
+                        <ion-item routerLink="/login" routerLinkActive="active" routerDirection="root" detail="false" routerLinkActive="selected">
+                            <ion-icon slot="start" name="log-in"></ion-icon>
+                            <ion-label>
+                                Se connecter
+                            </ion-label>
+                        </ion-item>
+                    </ion-menu-toggle>
+
+                    <ion-menu-toggle autoHide="false">
+                        <ion-item routerLink="/signup" routerLinkActive="active" routerDirection="root" detail="false" routerLinkActive="selected">
+                            <ion-icon slot="start" name="person-add"></ion-icon>
+                            <ion-label>
+                                Créer un compte
+                            </ion-label>
                         </ion-item>
                     </ion-menu-toggle>
                 </ion-list>
+
             </ion-content>
         </ion-menu>
         <ion-router-outlet id="main-content"></ion-router-outlet>

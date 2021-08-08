@@ -10,25 +10,23 @@
 
 <ion-content>
 
-    <ion-grid>
-        <ion-row>
-            <ion-col>
-                <form [formGroup]="loginForm" (ngSubmit)="logIn()" novalidate>
-                    <ion-item>
-                        <ion-label position="floating">Email</ion-label>
-                        <ion-input formControlName="email" type="email" name="email" required></ion-input>
-                    </ion-item>
-                    <ion-item>
-                        <ion-label position="floating">Password</ion-label>
-                        <ion-input formControlName="password" type="password" name="password" required></ion-input>
-                    </ion-item>
-                    <ion-button type="submit " expand="block ">
-                        <ion-icon slot="start " name="send "></ion-icon>
-                        Se connecter
-                    </ion-button>
-                </form>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
+    <div class="login-logo">
+        <img src="assets/icon/icon.png" alt="logo" />
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="logIn()" novalidate>
+        <ion-item>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input formControlName="email" type="email" name="email" required></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Mot de passe</ion-label>
+            <ion-input formControlName="password" type="password" name="password" required></ion-input>
+        </ion-item>
+        <ion-button type="submit " expand="block ">
+            <ion-icon slot="start " name="send "></ion-icon>
+            Se connecter
+        </ion-button>
+    </form>
 
 </ion-content>

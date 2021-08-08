@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Créer un compte</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="signup-logo">
+    <img src="assets/icon/icon.png" alt="logo" />
+  </div>
+
+  <form [formGroup]="signupForm" (ngSubmit)="signup()" novalidate>
+      <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input formControlName="email" type="email" name="email" required></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label position="floating">Mot de passe</ion-label>
+          <ion-input formControlName="password" type="password" name="password" required></ion-input>
+      </ion-item>
+      <div class="ion-padding">
+        <ion-button type="submit" expand="block">M'enregistrer</ion-button>
+      </div>
+  </form>
+
+</ion-content>

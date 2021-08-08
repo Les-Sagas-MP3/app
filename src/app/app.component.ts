@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ActionPerformed, PushNotificationSchema, PushNotifications, Token } from '@capacitor/push-notifications';
@@ -15,8 +15,7 @@ import { FcmService } from './services/fcm/fcm.service';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit {
-  public selectedIndex = 0;
-  public appPages = [
+  appPages = [
     {
       title: 'Actualités',
       url: '/news',
@@ -33,8 +32,9 @@ export class AppComponent implements OnInit {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    public authService: AuthService,
-    private fcmService: FcmService
+    private fcmService: FcmService,
+    private navCtrl: NavController,
+    public authService: AuthService
   ) {
     this.initializeApp();
   }
@@ -49,12 +49,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.authService.whoami();
-    const split = window.location.pathname.split('/');
-    const path = `${split[0]}/${split[1]}`;
-    if (path !== undefined) {
-      this.selectedIndex = this.appPages.findIndex(page => page.url === path);
-    }
-
   }
 
   logout() {
@@ -62,5 +56,6 @@ export class AppComponent implements OnInit {
     this.authService.currentTokenValue = null;
     localStorage.setItem('user', null);
     this.authService.currentUserValue = null;
+    this.navCtrl.navigateRoot('/news');
   }
 }
