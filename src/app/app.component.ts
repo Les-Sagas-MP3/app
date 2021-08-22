@@ -3,10 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { NavController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { ActionPerformed, PushNotificationSchema, PushNotifications, Token } from '@capacitor/push-notifications';
 
 import { AuthService } from './services/auth/auth.service';
-import { Capacitor } from '@capacitor/core';
 import { FcmService } from './services/fcm/fcm.service';
 
 @Component({
