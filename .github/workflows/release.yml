@@ -55,7 +55,7 @@ jobs:
       with:
         ionic-version: 6.11.8
     - name: Copy assets to Android
-      run: ionic build --configuration=heroku-fr
+      run: ionic build --configuration=production-fr
     - name: Sync Ionic with Android
       run: ionic cap sync
     - name: Set up JDK
@@ -162,25 +162,8 @@ jobs:
       with:
         ref: '${{ needs.verify-version.outputs.version }}'
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --build-arg configuration=heroku-fr --tag lessagasmp3/app:heroku-${{ needs.verify-version.outputs.version }}
+      run: docker build . --file Dockerfile --build-arg configuration=production-fr --tag lessagasmp3/app:${{ needs.verify-version.outputs.version }}
     - name: Login to Docker Hub
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
     - name: Publish to Docker Hub
-      run: docker push lessagasmp3/app:heroku-${{ needs.verify-version.outputs.version }}
-
-  deploy-production:
-    needs: [verify-version, release]
-    name: Deploy to production
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        ref: '${{ needs.verify-version.outputs.version }}'
-    - name: Execute deployment remotely
-      uses: appleboy/ssh-action@v0.0.7
-      with:
-        host: ${{ secrets.PRODUCTION_HOST }}
-        username: ${{ secrets.PRODUCTION_USER }}
-        key : ${{ secrets.PRODUCTION_KEY }}
-        port: ${{ secrets.PRODUCTION_PORT }}
-        script: (nohup /opt/les-sagas-mp3/deploy/app.sh ${{ needs.verify-version.outputs.version }} &> /opt/les-sagas-mp3/deploy/app.log < /dev/null &) && exit 0
+      run: docker push lessagasmp3/app:${{ needs.verify-version.outputs.version }}

@@ -1,15 +1,20 @@
 {
   "name": "les-sagas-mp3",
-  "version": "0.3.6",
+  "version": "0.4.0",
   "author": "Les Sagas MP3",
   "homepage": "https://github.com/Les-Sagas-MP3",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "heroku-postbuild": "bash ./.heroku/postbuild.sh"
+  },
+  "engines": {
+    "node": "14.17.0",
+    "npm": "6.14.8"
   },
   "private": true,
   "dependencies": {
@@ -29,9 +34,12 @@
     "@ionic-native/status-bar": "^5.36.0",
     "@ionic/angular": "^5.8.4",
     "cordova-device-accounts-v2": "^2.0.8",
+    "express": "^4.17.1",
     "ionic": "^5.4.16",
+    "path": "^0.12.7",
     "rxjs": "~6.6.7",
     "tslib": "^2.3.1",
+    "typescript": "~4.3.5",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
@@ -46,6 +54,7 @@
     "@types/jasminewd2": "~2.0.10",
     "@types/node": "^16.11.4",
     "codelyzer": "^6.0.2",
+    "enhanced-resolve": "^5.8.3",
     "jasmine-core": "~3.10.1",
     "jasmine-spec-reporter": "~7.0.0",
     "karma": "~6.3.5",
