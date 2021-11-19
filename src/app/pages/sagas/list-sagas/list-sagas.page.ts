@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, NavController } from '@ionic/angular';
 import { SagaService } from 'src/app/services/sagas/saga.service';
 import { forkJoin } from 'rxjs';
 import { CategoryService } from 'src/app/services/categories/category.service';
 import { Category } from 'src/app/entities/category';
 import { Saga } from 'src/app/entities/saga';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-list-sagas',
@@ -21,6 +22,8 @@ export class ListSagasPage implements OnInit {
 
   constructor(
     public loadingController: LoadingController,
+    private navCtrl: NavController,
+    public authService: AuthService,
     private categoryService: CategoryService,
     private sagaService: SagaService) { }
 
@@ -41,7 +44,7 @@ export class ListSagasPage implements OnInit {
   }
 
   search(searchInput) {
-    if(searchInput.length > 2) {
+    if (searchInput.length > 2) {
       this.isSearchRunning = true;
       this.sagaService.search(searchInput)
         .subscribe(res => {
@@ -68,10 +71,18 @@ export class ListSagasPage implements OnInit {
         sagas = this.saveCategories(sagas);
         sagas.forEach(saga => this.items.push(saga));
         event.target.complete();
-        if(this.numPage == res.totalPages) {
+        if (this.numPage == res.totalPages) {
           event.target.disabled = true;
         }
       });
+  }
+
+  createSagaFromPdf(event) {
+    const file = event.target.files[0];
+    this.sagaService.uploadPdf(file)
+      .subscribe(res => {
+        this.navCtrl.navigateForward("sagas/" + res.id)
+      })
   }
 
   private saveCategories(items: Saga[]) {

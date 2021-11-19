@@ -8,7 +8,8 @@
 </ion-header>
 
 <ion-toolbar>
-    <ion-searchbar showCancelButton="focus" placeholder="Chercher une saga" (ionChange)="search($event.target.value)" (ionCancel)="cancelSearch()"></ion-searchbar>
+    <ion-searchbar showCancelButton="focus" placeholder="Chercher une saga" (ionChange)="search($event.target.value)"
+        (ionCancel)="cancelSearch()"></ion-searchbar>
 </ion-toolbar>
 
 <ion-content>
@@ -29,4 +30,18 @@
         <ion-infinite-scroll-content loadingText="Chargement...">
         </ion-infinite-scroll-content>
     </ion-infinite-scroll>
+
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed" *ngIf="authService.currentTokenValue">
+        <ion-fab-button>
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-list side="top">
+            <ion-fab-button id="fileInput">
+                <ion-icon name="cloud-upload"></ion-icon>
+                <input type="file" (change)="createSagaFromPdf($event)" id="fileInput"
+                accept="application/pdf">
+            </ion-fab-button>
+        </ion-fab-list>
+    </ion-fab>
+
 </ion-content>
