@@ -50,10 +50,7 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
-    localStorage.setItem('jwt', null);
-    this.authService.currentTokenValue = null;
-    localStorage.setItem('user', null);
-    this.authService.currentUserValue = null;
+    this.authService.logout();
     this.navCtrl.navigateRoot('/news');
   }
 }

@@ -59,8 +59,19 @@ export class AuthService {
         .subscribe(res => {
           localStorage.setItem('user', JSON.stringify(res));
           this.currentUserSubject.next(res);
+        }, error => {
+          if(error.status == 401) {
+            this.logout();
+          }
         });
     }
+  }
+
+  logout() {
+    localStorage.setItem('jwt', null);
+    this.currentTokenValue = null;
+    localStorage.setItem('user', null);
+    this.currentUserValue = null;
   }
 
 }
