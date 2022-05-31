@@ -12,8 +12,7 @@
 export CAPACITOR_ANDROID_STUDIO_PATH="<Location to Android Studio binary>" 
 npm install
 ionic build
-npx cap copy
-npx cap open android
+ionic capacitor copy android
 ```
 
 4. Use Android Studio to build and deploy

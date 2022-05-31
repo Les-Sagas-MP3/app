@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js 14.x
+    - name: Use Node.js 16.x
       uses: actions/setup-node@v1
       with:
-        node-version: 14.x
+        node-version: 16.x
     - run: npm ci
     - run: npm run build --if-present
 
@@ -21,16 +21,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js 14.x
+    - name: Use Node.js 16.x
       uses: actions/setup-node@v1
       with:
-        node-version: 14.x
+        node-version: 16.x
     - name: Install node modules
       run: npm install && npm run build
     - name: Use coturiv/setup-ionic
       uses: coturiv/setup-ionic@v1
       with:
-        ionic-version: 6.11.8
+        ionic-version: 6.19.1
     - name: Copy assets to Android
       run: ionic cap copy
     - name: Sync Ionic with Android
