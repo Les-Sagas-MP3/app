@@ -11,7 +11,7 @@ SCRIPT_LOCATION=$WORKSPACE/.release/
 echo '''
 {
     "webUrl": "https://app.les-sagas-mp3.fr",
-    "apiUrl": "https://api.les-sagas-mp3.fr"
+    "apiUrl": "https://api.les-sagas-mp3.fr/api"
 }
 ''' > $WORKSPACE/android/app/src/main/assets/public/assets/config.json
 
