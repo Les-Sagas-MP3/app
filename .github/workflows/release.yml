@@ -69,8 +69,6 @@ jobs:
         WORKSPACE: ${{ github.workspace }}
         GPG_DECRYPT_PASSPHRASE: ${{ secrets.GPG_DECRYPT_PASSPHRASE }}
         ANDROID_SIGNING_KEYSTORE_PASS: ${{ secrets.ANDROID_SIGNING_KEYSTORE_PASS }}
-    - name: Debug
-      run: ls -all ${{ github.workspace }}/android/app/build/outputs/apk/release
     - name: Upload APK as artifact
       uses: actions/upload-artifact@v2
       with:

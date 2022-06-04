@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { forkJoin } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { Category } from 'src/app/entities/category';
 import { Saga } from 'src/app/entities/saga';
 import { Season } from 'src/app/entities/season';
@@ -10,6 +9,7 @@ import { AuthorService } from 'src/app/services/authors/author.service';
 import { CategoryService } from 'src/app/services/categories/category.service';
 import { SagaService } from 'src/app/services/sagas/saga.service';
 import { SeasonService } from 'src/app/services/seasons/season.service';
+import { ConfigService } from 'src/app/services/config/config.service';
 
 @Component({
   selector: 'app-view-saga',
@@ -24,6 +24,7 @@ export class ViewSagaPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     public loadingController: LoadingController,
     public authorService: AuthorService,
+    public configService: ConfigService,
     public categoryService: CategoryService,
     private sagaService: SagaService,
     private seasonService: SeasonService) { }
@@ -52,7 +53,7 @@ export class ViewSagaPage implements OnInit {
 
   bannerUrl(): string {
     if(this.item.bannerUrl) {
-      return 'url(' + environment.webUrl + this.item.bannerUrl + ')';
+      return 'url(' + this.configService.get('appUrl') + this.item.bannerUrl + ')';
     } else {
       return '';
     }
@@ -60,7 +61,7 @@ export class ViewSagaPage implements OnInit {
 
   coverUrl(): string {
     if(this.item.coverUrl) {
-      return environment.webUrl + this.item.coverUrl;
+      return this.configService.get('appUrl') + this.item.coverUrl;
     } else {
       return '';
     }
