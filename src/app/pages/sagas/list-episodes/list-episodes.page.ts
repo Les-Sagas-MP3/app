@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
+import { ActionSheetController, LoadingController } from '@ionic/angular';
 import { Episode } from 'src/app/entities/episode';
 import { Saga } from 'src/app/entities/saga';
 import { Season } from 'src/app/entities/season';
@@ -18,9 +18,11 @@ import { SeasonService } from 'src/app/services/seasons/season.service';
 })
 export class ListEpisodesPage implements OnInit {
 
-  public item: Saga = new Saga();
+  public saga: Saga = new Saga();
+  public season: Season = new Season();
 
   constructor(
+    public actionSheetController: ActionSheetController,
     private activatedRoute: ActivatedRoute,
     public loadingController: LoadingController,
     public authService: AuthService,
@@ -29,44 +31,27 @@ export class ListEpisodesPage implements OnInit {
     private sagaService: SagaService,
     private seasonService: SeasonService) { }
 
-
   ngOnInit() {
-    var itemId: number = +this.activatedRoute.snapshot.paramMap.get('id');
+    var sagaId: number = +this.activatedRoute.snapshot.paramMap.get('sagaId');
+    var seasonId: number = +this.activatedRoute.snapshot.paramMap.get('seasonId');
     this.loadingController.create({
       message: 'Téléchargement...'
     }).then((loading) => {
       loading.present();
-      this.sagaService.getById(itemId)
+      this.sagaService.getById(sagaId)
         .subscribe(data => {
-          this.item = Saga.fromModel(data);
-          this.seasonService.getAllByIds(data.seasonsRef)
+          this.saga = Saga.fromModel(data);
+          this.seasonService.getById(seasonId)
             .subscribe(data => {
-              this.item.seasons = Season.fromModels(data);
-              let episodeIds = [];
-              this.item.seasons.forEach(season => {
-                episodeIds.push(season.episodesRef);
-              });
-              this.episodeService.getAllByIds(episodeIds)
+              this.season = Season.fromModel(data);
+              this.episodeService.getAllByIds(this.season.episodesRef)
                 .subscribe(data => {
-                  const episodes = Episode.fromModels(data);
-                  episodes.forEach(episode => {
-                    this.item.seasons.find(season => season.id === episode.seasonRef).episodes.push(episode);
-                  })
+                  this.season.episodes = Episode.fromModels(data);
                   loading.dismiss();
                 })
             });
         });
     });
-  }
-
-  create() {
-    const season = new SeasonModel();
-    season.sagaRef = this.item.id;
-    season.number = this.item.seasons.length + 1;
-    this.seasonService.create(season)
-      .subscribe(() => {
-        this.ngOnInit();
-      })
   }
 
 }

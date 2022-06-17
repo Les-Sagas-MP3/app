@@ -36,13 +36,18 @@ const routes: Routes = [
     loadChildren: () => import('./pages/admin/sync/sync.module').then( m => m.SyncPageModule)
   },
   {
-    path: 'sagas/:id/seasons',
+    path: 'sagas/:sagaId/seasons/:seasonId',
     loadChildren: () => import('./pages/sagas/list-episodes/list-episodes.module').then( m => m.ListEpisodesPageModule)
   },
   {
     path: 'sagas/:saga/episode/:episode',
     loadChildren: () => import('./pages/sagas/play-episode/play-episode.module').then( m => m.PlayEpisodePageModule)
+  },
+  {
+    path: 'sagas/:saga/episode/:episode/edit',
+    loadChildren: () => import('./pages/sagas/edit-episode/edit-episode.module').then( m => m.EditEpisodePageModule)
   }
+
 
 
 ];

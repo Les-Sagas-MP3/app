@@ -1,5 +1,5 @@
 <ion-header [translucent]="true">
-    <ion-toolbar>
+    <ion-toolbar color="primary">
         <ion-buttons slot="start">
             <ion-menu-button></ion-menu-button>
             <ion-back-button></ion-back-button>
@@ -24,7 +24,7 @@
         <ion-img class="cover" [src]="coverUrl()"></ion-img>
     </div>
     <ion-list>
-        <ion-list-header>
+        <ion-list-header color="secondary">
           <ion-label>Informations</ion-label>
         </ion-list-header>
         <ion-item lines="none">
@@ -69,13 +69,12 @@
                 </ion-col>
             </ion-row>
         </ion-grid>
-        <ion-list-header>
-          <ion-label>Episodes</ion-label>
+        <ion-list-header color="secondary">
+          <ion-label>Saisons</ion-label>
         </ion-list-header>
-        <ion-item routerLink="/sagas/{{ item.id }}/seasons" routerDirection="forward" color="primary">
-            <ion-icon slot="start" name="caret-forward-circle-outline"></ion-icon>
+        <ion-item *ngFor="let season of item.seasons" routerLink="/sagas/{{ item.id }}/seasons/{{ season.id }}" routerDirection="forward">
             <ion-label>
-                Voir les épisodes
+                {{ season.name }}
             </ion-label>
         </ion-item>
     </ion-list>

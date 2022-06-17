@@ -1,36 +1,20 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ item.title }}</ion-title>
+    <ion-title>{{ saga.title }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-    <div *ngFor="let season of item.seasons">
-      <ion-list-header color="primary">
-        <ion-label>Saison {{ season.number }} {{ season.name }}</ion-label>
-      </ion-list-header>
-      <ion-item  *ngFor="let episode of season.episodes" lines="none" routerLink="/sagas/{{ item.id }}/episode/{{ episode.id }}" routerDirection="forward">
-        <ion-label>
-          <ion-icon name="play-outline"></ion-icon> Episode 1
-        </ion-label>
-      </ion-item>
-    </div>
+    <ion-item *ngFor="let episode of season.episodes" routerLink="/sagas/{{ saga.id }}/episode/{{ episode.id }}"
+      routerDirection="forward">
+      <ion-label>
+        <ion-icon name="play-outline"></ion-icon> {{ episode.displayedNumber }} - {{ episode.title }}
+      </ion-label>
+    </ion-item>
   </ion-list>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="authService.currentTokenValue">
-    <ion-fab-button><ion-icon name="pencil-outline"></ion-icon></ion-fab-button>
-    <ion-fab-list side="top">
-      <ion-fab-button (click)="create()" >
-        <ion-icon name="add"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button>
-        <ion-icon name="pencil-outline"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
-
 </ion-content>
