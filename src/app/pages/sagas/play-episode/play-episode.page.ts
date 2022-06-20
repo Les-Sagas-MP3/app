@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { Episode } from 'src/app/entities/episode';
+import { File } from 'src/app/entities/file';
 import { Saga } from 'src/app/entities/saga';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ConfigService } from 'src/app/services/config/config.service';
 import { EpisodesService } from 'src/app/services/episodes/episodes.service';
+import { FileService } from 'src/app/services/file/file.service';
 import { SagaService } from 'src/app/services/sagas/saga.service';
 
 @Component({
@@ -24,7 +26,8 @@ export class PlayEpisodePage implements OnInit {
     private authService: AuthService,
     public configService: ConfigService,
     private sagaService: SagaService,
-    private episodeService: EpisodesService) { }
+    private episodeService: EpisodesService,
+    private fileService: FileService) { }
 
 
   ngOnInit() {
@@ -40,7 +43,11 @@ export class PlayEpisodePage implements OnInit {
           this.episodeService.getById(episodeId)
             .subscribe(data => {
               this.episode = Episode.fromModel(data);
-              loading.dismiss();
+              this.fileService.getById(this.episode.fileRef)
+                .subscribe(data => {
+                  this.episode.file = File.fromModel(data);
+                  loading.dismiss();
+                })
             });
         });
     });
@@ -52,5 +59,9 @@ export class PlayEpisodePage implements OnInit {
     } else {
       return '';
     }
+  }
+
+  episodeUrl(): string {
+    return this.configService.get('apiUrl') + "/files/audio" + this.episode.file.url;
   }
 }

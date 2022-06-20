@@ -7,9 +7,7 @@
         <ion-title>{{ item.title }}</ion-title>
     </ion-toolbar>
 </ion-header>
-
 <ion-content>
-
     <div class="background" [ngStyle]="{'background-image': bannerUrl()}">
         <div class="background-left-buttons">
             <ion-button *ngIf="item.url" color="light" href="{{ item.url }}">
@@ -25,7 +23,7 @@
     </div>
     <ion-list>
         <ion-list-header color="secondary">
-          <ion-label>Informations</ion-label>
+            <ion-label>Informations</ion-label>
         </ion-list-header>
         <ion-item lines="none">
             <ion-icon slot="start" name="person"></ion-icon>
@@ -70,9 +68,10 @@
             </ion-row>
         </ion-grid>
         <ion-list-header color="secondary">
-          <ion-label>Saisons</ion-label>
+            <ion-label>Saisons</ion-label>
         </ion-list-header>
-        <ion-item *ngFor="let season of item.seasons" routerLink="/sagas/{{ item.id }}/seasons/{{ season.id }}" routerDirection="forward">
+        <ion-item *ngFor="let season of item.seasons" routerLink="/sagas/{{ item.id }}/seasons/{{ season.id }}"
+            routerDirection="forward">
             <ion-label>
                 {{ season.name }}
             </ion-label>

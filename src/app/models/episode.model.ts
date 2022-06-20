@@ -6,6 +6,8 @@ export class EpisodeModel extends AuditModel {
     displayedNumber: string = '1';
     title: string = '';
     infos: string = '';
+    workspace: string = '';
     seasonRef: number = 0;
+    fileRef: number = 0;
 
 }

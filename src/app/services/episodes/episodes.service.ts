@@ -21,4 +21,7 @@ export class EpisodesService {
     return this.http.get<EpisodeModel[]>(`${this.configService.get('apiUrl')}/episode`, { params });
   }
 
+  update(episode: EpisodeModel) {
+    return this.http.put<EpisodeModel>(`${this.configService.get('apiUrl')}/episode`, episode);
+  }
 }

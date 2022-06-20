@@ -5,7 +5,8 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="primary">
-      <ion-button routerLink="/sagas/{{ saga.id }}/episode/{{ episode.id }}/edit" routerDirection="forward" *ngIf="authService.currentTokenValue">
+      <ion-button routerLink="/sagas/{{ saga.id }}/episode/{{ episode.id }}/edit" routerDirection="forward"
+        *ngIf="authService.currentTokenValue">
         <ion-icon name="pencil"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -21,6 +22,12 @@
       <ion-card-subtitle>#{{ episode.number }}</ion-card-subtitle>
     </ion-card-header>
 
+    <ion-button expand="block" *ngIf="episode.fileRef > 0" href="{{ episodeUrl() }}">
+      <ion-icon name="play-outline"></ion-icon>
+      Jouer l'épisode
+    </ion-button>
+    
+
   </ion-card>
-  
+
 </ion-content>

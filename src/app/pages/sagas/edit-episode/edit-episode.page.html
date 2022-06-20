@@ -5,7 +5,7 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="primary">
-      <ion-button (click)="save()" routerDirection="backward" *ngIf="authService.currentTokenValue">
+      <ion-button routerDirection="backward" *ngIf="authService.currentTokenValue" type="submit" (click)="save()">
         <ion-icon name="save"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -14,5 +14,35 @@
 </ion-header>
 
 <ion-content>
+  <form [formGroup]="episodeForm" novalidate>
+    <ion-list lines="full" class="ion-no-margin">
+      <ion-list-header lines="full">
+        <ion-label>Informations</ion-label>
+      </ion-list-header>
+      <ion-item>
+        <ion-label position="floating">Saison</ion-label>
+        <ion-select value="{{ episode.seasonRef }}" formControlName="seasonRef">
+          <ion-select-option *ngFor="let season of saga.seasons" value="{{ season.id }}">{{ season.name }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Numéro</ion-label>
+        <ion-input type="string" value="{{ episode.displayedNumber }}" formControlName="number"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Titre</ion-label>
+        <ion-input type="string" value="{{ episode.title }}" formControlName="title"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Description</ion-label>
+        <ion-textarea value="{{ episode.infos }}" formControlName="infos"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Fichier audio</ion-label>
+        <ion-input class="fileUpload" type="file" formControlName="file" (change)="onFileChange($event)"></ion-input>
+      </ion-item>
 
+    </ion-list>
+  </form>
 </ion-content>

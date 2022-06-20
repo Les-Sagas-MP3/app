@@ -7,7 +7,6 @@
     <ion-title>{{ saga.title }}</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let episode of season.episodes" routerLink="/sagas/{{ saga.id }}/episode/{{ episode.id }}"

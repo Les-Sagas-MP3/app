@@ -33,6 +33,7 @@ export class Saga extends SagaModel {
         entity.nbReviews = model.nbReviews;
         entity.urlReviews = model.urlReviews;
         entity.nbBravos = model.nbBravos;
+        entity.workspace = model.workspace;
         entity.authorsRef = model.authorsRef;
         entity.composersRef = model.composersRef;
         entity.categoriesRef = model.categoriesRef;

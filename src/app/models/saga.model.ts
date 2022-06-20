@@ -19,6 +19,7 @@ export class SagaModel extends AuditModel {
     nbReviews: number = 0;
     urlReviews: string = '';
     nbBravos: number = 0;
+    workspace: string = '';
     authorsRef: number[] = [];
     composersRef: number[] = [];
     categoriesRef: number[] = [];
