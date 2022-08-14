@@ -15,19 +15,35 @@
 </ion-header>
 
 <ion-content>
-  <ion-card>
+  <ion-card id="container">
     <ion-img class="cover" [src]="coverUrl()"></ion-img>
     <ion-card-header class="ion-text-center">
       <ion-card-title>{{ episode.title }}</ion-card-title>
       <ion-card-subtitle>#{{ episode.number }}</ion-card-subtitle>
     </ion-card-header>
-
-    <ion-button expand="block" *ngIf="episode.fileRef > 0" href="{{ episodeUrl() }}">
-      <ion-icon name="play-outline"></ion-icon>
-      Jouer l'épisode
-    </ion-button>
-    
-
+    <div *ngIf="state.canplay">
+      <ion-range #slider min="0" 
+        [max]="state?.duration" 
+        [value]="!sliderBeingUpdated ? state?.currentTime : 0"
+        (ionKnobMoveStart)="ionKnobMoveStart($event)"
+        (ionKnobMoveEnd)="ionKnobMoveEnd($event)"
+        [disabled]="state?.error || episode === undefined"></ion-range>
+      <p>{{ state?.readableCurrentTime }} / {{ state?.readableDuration }}</p>
+    </div>
+    <div class="flex_box">
+      <ion-button shape="round" (click)="previous()" [disabled]="isFirstPlaying()">
+        <ion-icon slot="icon-only" name="play-back"></ion-icon>
+      </ion-button>
+      <ion-button shape="round" (click)="play()" [disabled]="state?.error" *ngIf="!state?.playing && state.canplay">
+        <ion-icon slot="icon-only" name="play"></ion-icon>
+      </ion-button>
+      <ion-button shape="round" (click)="pause()" *ngIf="state?.playing">
+        <ion-icon slot="icon-only" name="pause"></ion-icon>
+      </ion-button>
+      <ion-button shape="round" (click)="next()" [disabled]="isLastPlaying()">
+        <ion-icon slot="icon-only" name="play-forward"></ion-icon>
+      </ion-button>
+    </div>
   </ion-card>
 
 </ion-content>

@@ -1,0 +1,30 @@
+#container {
+    text-align: center;
+    padding: 20px;
+}
+
+ion-range {
+    padding: 0px 10px;
+    --bar-height: 3px;
+}
+
+p {
+    color: #b7b6b6;
+    font-size: 13px;
+    margin: 0px;
+    font-weight: 500;
+}
+
+.flex_box {
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ion-button {
+    height: 50px;
+    min-height: max-content;
+    margin: 0px 7px;
+    font-size: 21px;
+}

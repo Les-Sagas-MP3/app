@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
+
 import { Episode } from 'src/app/entities/episode';
 import { File } from 'src/app/entities/file';
 import { Saga } from 'src/app/entities/saga';
+import { StreamState } from 'src/app/interfaces/stream-state';
+import { AudioService } from 'src/app/services/audio/audio.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ConfigService } from 'src/app/services/config/config.service';
 import { EpisodesService } from 'src/app/services/episodes/episodes.service';
@@ -19,15 +22,23 @@ export class PlayEpisodePage implements OnInit {
 
   public saga: Saga = new Saga();
   public episode: Episode = new Episode();
+  state: StreamState;
+  
+  sliderBeingUpdated = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     public loadingController: LoadingController,
+    public audioService: AudioService,
     private authService: AuthService,
     public configService: ConfigService,
     private sagaService: SagaService,
     private episodeService: EpisodesService,
-    private fileService: FileService) { }
+    private fileService: FileService) {
+      this.audioService.getState().subscribe(state => {
+        this.state = state;
+      });
+    }
 
 
   ngOnInit() {
@@ -45,12 +56,48 @@ export class PlayEpisodePage implements OnInit {
               this.episode = Episode.fromModel(data);
               this.fileService.getById(this.episode.fileRef)
                 .subscribe(data => {
-                  this.episode.file = File.fromModel(data);
+                  if(data !== null) {
+                    this.episode.file = File.fromModel(data);
+                    this.playStream(this.episodeUrl());
+                  }
                   loading.dismiss();
                 })
             });
         });
     });
+  }
+
+  playStream(url) {
+    this.audioService.playStream(url).subscribe(() => {});
+  }
+
+  play() {
+    this.audioService.play();
+  }
+
+  pause() {
+    this.audioService.pause();
+  }
+
+  stop() {
+    this.audioService.stop();
+  }
+
+  ionKnobMoveStart() {
+    this.sliderBeingUpdated = true;
+  }
+
+  ionKnobMoveEnd(event) {
+    this.audioService.seekTo(event.detail.value);
+    this.sliderBeingUpdated = false;
+  }
+
+  isFirstPlaying() {
+    return false;
+  }
+
+  isLastPlaying() {
+    return false;
   }
 
   coverUrl(): string {

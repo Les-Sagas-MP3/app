@@ -73,7 +73,7 @@
         <ion-item *ngFor="let season of item.seasons" routerLink="/sagas/{{ item.id }}/seasons/{{ season.id }}"
             routerDirection="forward">
             <ion-label>
-                {{ season.name }}
+                {{ season.name ?? 'Saison ' + season.number }}
             </ion-label>
         </ion-item>
     </ion-list>
