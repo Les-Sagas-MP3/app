@@ -17,8 +17,6 @@ jobs:
     - name: Get the version
       id: get_version
       run: "echo ::set-output name=VERSION::$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]')"
-    - name: Test snapshot
-      run: if [[ "${{ steps.get_version.outputs.VERSION }}" == *"-SNAPSHOT" ]]; then exit 1; else exit 0; fi
     - name: Get release
       id: get_release
       run: echo ::set-output name=RELEASE_HTTP_CODE::$(curl -s -o out.html -w '%{http_code}'  https://github.com/les-sagas-mp3/app/releases/tag/${{ steps.get_version.outputs.VERSION }};)

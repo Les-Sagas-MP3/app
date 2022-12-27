@@ -1,0 +1,68 @@
+name: Deployment
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    if: github.actor!= 'dependabot'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+      pull-requests: 'write'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get the version
+        id: get_version
+        run: "echo ::set-output name=VERSION::$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]')"
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+      - run: npm install
+      - run: npm ci
+      - run: npm run build --configuration=production-fr
+      - run: tar czf www.tar.gz www
+      - id: auth_google
+        name: Login to Google Cloud
+        uses: google-github-actions/auth@v0
+        with:
+          token_format: 'access_token'
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+      - id: upload_artifact
+        name: Upload jar in Cloud Storage
+        uses: google-github-actions/upload-cloud-storage@v0
+        with:
+          path: '${{ github.workspace }}/www.tar.gz'
+          destination: 'les-sagas-mp3-build/review-app-${{ github.event.number }}'
+          predefinedAcl: publicRead
+      - name: Get subnetwork CIDR
+        id: get_subnetwork_cidr
+        run: echo ::set-output name=CIDR::10.3.$(expr ${{ github.event.number }} % 255).0/24
+      - name: Start Google Cloud Build trigger
+        id: trigger_deploy
+        run: |
+          echo ::set-output name=DEPLOY_ID::$(curl --location --request POST 'https://content-cloudbuild.googleapis.com/v1/projects/les-sagas-mp3/triggers/fce3757a-1b5f-48ce-9321-8f88d6f5278d:run' \
+            --header 'Authorization: Bearer ${{ steps.auth_google.outputs.access_token }}' \
+            --header 'Content-Type: application/json' \
+              --data-raw '{
+            "substitutions": {
+              "_APP_ARCHIVE_URL": "https://storage.googleapis.com/les-sagas-mp3-build/${{ steps.upload_artifact.outputs.uploaded }}",
+              "_APP_VERSION": "${{ steps.get_version.outputs.VERSION }}",
+              "_ENVIRONMENT_NAME": "review-app-${{ github.event.number }}",
+              "_ENVIRONMENT_TEMPLATE": "review-app",
+              "_SUBNETWORK_CIDR": "${{ steps.get_subnetwork_cidr.outputs.CIDR }}",
+              "_GITHUB_PR": "${{ github.event.number }}",
+              "_GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}"
+            }
+            }' | jq -r '.metadata.build.id')
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@v1
+        with:
+          message: |
+            The following deployment request has been submitted to @Thomah :
+            https://console.cloud.google.com/cloud-build/builds;region=global/${{ steps.trigger_deploy.outputs.DEPLOY_ID }}?project=les-sagas-mp3
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
