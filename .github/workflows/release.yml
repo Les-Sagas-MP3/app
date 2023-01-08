@@ -34,7 +34,7 @@ jobs:
       with:
         node-version: 16.x
     - run: npm ci
-    - run: npm run build --configuration=production-fr
+    - run: npm run build --configuration=production
 
   build-android:
     needs: build
@@ -53,7 +53,7 @@ jobs:
       with:
         ionic-version: 6.20.6
     - name: Copy assets to Android
-      run: ionic build --configuration=production-fr
+      run: ionic build --configuration=production
     - name: Sync Ionic with Android
       run: ionic cap sync
     - name: Set up JDK
@@ -102,7 +102,7 @@ jobs:
     - name: Install node modules
       run: npm install
     - run: npm ci
-    - run: npm run build --configuration=production-fr
+    - run: npm run build --configuration=production
     - run: tar czf www.tar.gz www
     - name: Upload dist
       id: upload-dist
@@ -119,7 +119,7 @@ jobs:
       with:
         ionic-version: 6.20.6
     - name: Copy assets to Android
-      run: ionic build --configuration=production-fr
+      run: ionic build --configuration=production
     - name: Sync Ionic with Android
       run: ionic cap sync
     - name: Write google-services.json file
@@ -158,7 +158,7 @@ jobs:
       with:
         ref: '${{ needs.verify-version.outputs.version }}'
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --build-arg configuration=production-fr --tag lessagasmp3/app:${{ needs.verify-version.outputs.version }}
+      run: docker build . --file Dockerfile --build-arg configuration=production --tag lessagasmp3/app:${{ needs.verify-version.outputs.version }}
     - name: Login to Docker Hub
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
     - name: Publish to Docker Hub

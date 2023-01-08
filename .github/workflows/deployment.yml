@@ -24,7 +24,7 @@ jobs:
           node-version: 16.x
       - run: npm install
       - run: npm ci
-      - run: npm run build --configuration=production-fr
+      - run: npm run build --configuration=production
       - run: tar czf www.tar.gz www
       - id: auth_google
         name: Login to Google Cloud
