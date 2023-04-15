@@ -56,9 +56,9 @@ export class ViewSagaPage implements OnInit {
     });
   }
 
-  bannerUrl(): string {
+  bannerUrl(): any {
     if(this.item.bannerUrl) {
-      return 'url(' + this.configService.get('appUrl') + this.item.bannerUrl + ')';
+      return {'background-image': 'url(' + this.configService.get('apiUrl') + "/files/image" + this.item.bannerUrl + ')'}
     } else {
       return '';
     }
@@ -66,7 +66,7 @@ export class ViewSagaPage implements OnInit {
 
   coverUrl(): string {
     if(this.item.coverUrl) {
-      return this.configService.get('appUrl') + this.item.coverUrl;
+      return this.configService.get('apiUrl') + "/files/image" + this.item.coverUrl;
     } else {
       return '';
     }

@@ -1,0 +1,64 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="primary">
+      <ion-button routerDirection="backward" *ngIf="authService.currentTokenValue" type="submit" (click)="save()">
+        <ion-icon name="save"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ saga.title }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="sagaForm" novalidate>
+    <ion-list lines="full" class="ion-no-margin">
+      <ion-list-header lines="full">
+        <ion-label>Informations</ion-label>
+      </ion-list-header>
+      <ion-item>
+        <ion-label position="floating">Titre</ion-label>
+        <ion-input type="string" value="{{ saga.title }}" formControlName="title"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">URL</ion-label>
+        <ion-input value="{{ saga.url }}" formControlName="url"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">URL Wiki</ion-label>
+        <ion-input value="{{ saga.urlWiki }}" formControlName="urlWiki"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Etat</ion-label>
+        <ion-input value="{{ saga.status }}" formControlName="status"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Synopsis</ion-label>
+        <ion-textarea value="{{ saga.synopsis }}" formControlName="synopsis"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Origine</ion-label>
+        <ion-textarea value="{{ saga.origin }}" formControlName="origin"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Génèse</ion-label>
+        <ion-textarea value="{{ saga.genese }}" formControlName="genese"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Récompenses</ion-label>
+        <ion-textarea value="{{ saga.awards }}" formControlName="awards"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Bannière</ion-label>
+        <ion-input class="fileUpload" type="file" formControlName="banner" (change)="onBannerChange($event)">{{ bannerSource }}</ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Pochette</ion-label>
+        <ion-input class="fileUpload" type="file" formControlName="cover" (change)="onCoverChange($event)">{{ coverSource }}</ion-input>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>

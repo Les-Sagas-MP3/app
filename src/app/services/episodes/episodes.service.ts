@@ -21,6 +21,10 @@ export class EpisodesService {
     return this.http.get<EpisodeModel[]>(`${this.configService.get('apiUrl')}/episode`, { params });
   }
 
+  create(episode: EpisodeModel) {
+    return this.http.post<EpisodeModel>(`${this.configService.get('apiUrl')}/episode`, episode);
+  }
+
   update(episode: EpisodeModel) {
     return this.http.put<EpisodeModel>(`${this.configService.get('apiUrl')}/episode`, episode);
   }

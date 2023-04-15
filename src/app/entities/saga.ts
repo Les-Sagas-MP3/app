@@ -1,4 +1,4 @@
-import { SagaModel } from '../models/saga.model';
+import { SagaModel } from '../models/saga/saga.model';
 import { Author } from './author';
 import { Category } from './category';
 import { Season } from './season';

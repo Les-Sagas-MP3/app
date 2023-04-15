@@ -23,6 +23,11 @@
                 </h3>
             </ion-label>
         </ion-item>
+        <ion-item button="true" (click)="addSaga()" *ngIf="authService.currentTokenValue">
+            <ion-label>
+                < Ajouter une saga >
+            </ion-label>
+        </ion-item>
     </ion-list>
 
     <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)" [disabled]="isSearchRunning">

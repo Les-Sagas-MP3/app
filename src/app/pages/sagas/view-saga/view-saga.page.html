@@ -5,10 +5,17 @@
             <ion-back-button></ion-back-button>
         </ion-buttons>
         <ion-title>{{ item.title }}</ion-title>
+        <ion-buttons slot="primary">
+          <ion-button routerLink="/sagas/{{ item.id }}/edit" routerDirection="forward"
+            *ngIf="authService.currentTokenValue">
+            <ion-icon name="pencil"></ion-icon>
+          </ion-button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <div class="background" [ngStyle]="{'background-image': bannerUrl()}">
+    <div class="background" [ngStyle]="bannerUrl()">
+
         <div class="background-left-buttons">
             <ion-button *ngIf="item.url" color="light" href="{{ item.url }}">
                 <ion-icon slot="start" name="globe"></ion-icon>

@@ -108,6 +108,7 @@ export class EditEpisodePage implements OnInit {
               this.episodeService.update(episode)
                 .subscribe(data => {
                   console.debug(data);
+                  this.navCtrl.navigateForward("sagas/" + this.saga.id)
                   loading.dismiss();
                 }, error => {
                   console.error(error);
@@ -118,6 +119,7 @@ export class EditEpisodePage implements OnInit {
           this.episodeService.update(episode)
           .subscribe(data => {
             console.debug(data);
+            this.navCtrl.navigateForward("sagas/" + this.saga.id)
             loading.dismiss();
           }, error => {
             console.error(error);

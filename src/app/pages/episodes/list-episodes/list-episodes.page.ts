@@ -4,6 +4,7 @@ import { ActionSheetController, LoadingController } from '@ionic/angular';
 import { Episode } from 'src/app/entities/episode';
 import { Saga } from 'src/app/entities/saga';
 import { Season } from 'src/app/entities/season';
+import { EpisodeModel } from 'src/app/models/episode.model';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ConfigService } from 'src/app/services/config/config.service';
 import { EpisodesService } from 'src/app/services/episodes/episodes.service';
@@ -45,12 +46,24 @@ export class ListEpisodesPage implements OnInit {
               this.season = Season.fromModel(data);
               this.episodeService.getAllByIds(this.season.episodesRef)
                 .subscribe(data => {
-                  this.season.episodes = Episode.fromModels(data);
+                  this.season.episodes = Episode.fromModels(data).sort((first, second) => 0 - (first.number > second.number ? -1 : 1));
                   loading.dismiss();
                 })
             });
         });
     });
+  }
+
+  addEpisode() {
+    var episode = new EpisodeModel();
+    if(this.season.episodes.length > 0) {
+      episode.number = this.season.episodes[this.season.episodes.length - 1].number + 1;
+    }
+    episode.seasonRef = this.season.id;
+    this.episodeService.create(episode)
+      .subscribe(data => {
+        this.ngOnInit();     
+      });
   }
 
 }

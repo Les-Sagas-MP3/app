@@ -1,4 +1,4 @@
-import { AuditModel } from './audit.model';
+import { AuditModel } from '../audit.model';
 
 export class SagaModel extends AuditModel {
 
