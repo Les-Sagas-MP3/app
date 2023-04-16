@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
-import { NavController, Platform } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { IonicModule, NavController, Platform } from '@ionic/angular';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from './services/auth/auth.service';
 import { FcmService } from './services/fcm/fcm.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
+  standalone: true,
+  imports: [IonicModule, RouterLink, RouterLinkActive, CommonModule],
 })
 export class AppComponent {
   appPages = [

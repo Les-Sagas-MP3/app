@@ -13,12 +13,10 @@
 
     <form [formGroup]="loginForm" (ngSubmit)="logIn()" novalidate>
         <ion-item>
-            <ion-label position="floating">Email</ion-label>
-            <ion-input formControlName="email" type="email" name="email" required></ion-input>
+            <ion-input label="Email" labelPlacement="floating" formControlName="email" type="email" name="email" required></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label position="floating">Mot de passe</ion-label>
-            <ion-input formControlName="password" type="password" name="password" required></ion-input>
+            <ion-input label="Mot de passe" labelPlacement="floating" formControlName="password" type="password" name="password" required></ion-input>
         </ion-item>
         <div class="ion-padding">
             <ion-button type="submit " expand="block ">

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">les-sagas-mp3</string>
-    <string name="title_activity_main">les-sagas-mp3</string>
-    <string name="package_name">io.ionic.starter</string>
-    <string name="custom_url_scheme">io.ionic.starter</string>
+    <string name="app_name">Les Sagas MP3</string>
+    <string name="title_activity_main">Les Sagas MP3</string>
+    <string name="package_name">fr.lessagasmp3.app</string>
+    <string name="custom_url_scheme">fr.lessagasmp3.app</string>
 </resources>
