@@ -1,4 +1,4 @@
-FROM node:16-stretch as builder
+FROM node:18-stretch as builder
 
 ARG configuration
 
@@ -6,7 +6,7 @@ COPY package.json package-lock.json ./
 RUN npm ci && mkdir /ng-app && mv ./node_modules ./ng-app
 WORKDIR /ng-app
 COPY . .
-RUN npm i -g @ionic/cli@6.20.6 && ionic build --configuration $configuration
+RUN npm i -g @ionic/cli@7 && ionic build --configuration $configuration
 
 FROM nginx:1.23
 

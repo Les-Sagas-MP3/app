@@ -79,13 +79,18 @@ export class EditSeasonPage implements OnInit {
         season.number = controls['number'].value;
         season.name = controls['name'].value;
         this.seasonService.update(season)
-        .subscribe(data => {
-          console.debug(data);
-          loading.dismiss();
-        }, error => {
-          console.error(error);
-          loading.dismiss();
-        });
+        .subscribe({
+          next: (data) => {
+            console.debug(data);
+            loading.dismiss();
+            this.navCtrl.navigateForward("sagas/" + this.saga.id)
+          },
+          error: error => {
+            console.error(error);
+            loading.dismiss();
+          }
+        }
+        );
       });
     } else {
       this.markFieldsDirty();
