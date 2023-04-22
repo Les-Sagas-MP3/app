@@ -27,12 +27,17 @@ export class SyncPage implements OnInit {
       loading.present();
       let syncNewsRequest = this.eventLogService.getLatestByName("SYNC_NEWS_START");
       let syncSagasRequest = this.eventLogService.getLatestByName("SYNC_SAGAS_START");
-      forkJoin([syncNewsRequest, syncSagasRequest]).subscribe(results => {
-        this.lastSyncNews = results[0];
-        this.lastSyncSagas = results[1];
-        loading.dismiss();
-      }, error => {
-        loading.dismiss();
+      forkJoin([syncNewsRequest, syncSagasRequest])
+      .subscribe({
+        next: (results) => {
+          this.lastSyncNews = results[0];
+          this.lastSyncSagas = results[1];
+          loading.dismiss();
+        },
+        error: error => {
+          console.error(error);
+          loading.dismiss();
+        }
       });
     });
   }

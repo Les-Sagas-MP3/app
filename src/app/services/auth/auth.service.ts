@@ -66,17 +66,17 @@ export class AuthService {
   }
   
   whoami() {
-    if(this.currentTokenValue != null) {
-      this.http.get<UserModel>(`${this.configService.get('apiUrl')}/auth/whoami`)
-        .subscribe(res => {
-          localStorage.setItem('user', JSON.stringify(res));
-          this.currentUserSubject.next(res);
-        }, error => {
-          if(error.status == 401) {
-            this.logout();
-          }
-        });
-    }
+    this.http.get<UserModel>(`${this.configService.get('apiUrl')}/auth/whoami`)
+    .subscribe({
+      next: (res) => {
+        localStorage.setItem('user', JSON.stringify(res));
+        this.currentUserSubject.next(res);
+      },
+      error: error => {
+        console.log(error);
+        this.logout();
+      }
+    });
   }
 
   logout() {

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './guards';
 
 export const routes: Routes = [
   {
@@ -24,7 +25,8 @@ export const routes: Routes = [
   },
   {
     path: 'sagas/:id/edit',
-    loadChildren: () => import('./pages/sagas/edit-saga/edit-saga.module').then( m => m.EditSagaPageModule)
+    loadChildren: () => import('./pages/sagas/edit-saga/edit-saga.module').then( m => m.EditSagaPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'sagas/:sagaId/seasons/:seasonId',
@@ -32,7 +34,8 @@ export const routes: Routes = [
   },
   {
     path: 'sagas/:sagaId/seasons/:seasonId/edit',
-    loadChildren: () => import('./pages/sagas/edit-season/edit-season.module').then( m => m.EditSeasonPageModule)
+    loadChildren: () => import('./pages/sagas/edit-season/edit-season.module').then( m => m.EditSeasonPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'sagas/:saga/episode/:episode',
@@ -40,7 +43,8 @@ export const routes: Routes = [
   },
   {
     path: 'sagas/:saga/episode/:episode/edit',
-    loadChildren: () => import('./pages/episodes/edit-episode/edit-episode.module').then( m => m.EditEpisodePageModule)
+    loadChildren: () => import('./pages/episodes/edit-episode/edit-episode.module').then( m => m.EditEpisodePageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',
@@ -52,7 +56,8 @@ export const routes: Routes = [
   },
   {
     path: 'sync',
-    loadChildren: () => import('./pages/admin/sync/sync.module').then(m => m.SyncPageModule)
+    loadChildren: () => import('./pages/admin/sync/sync.module').then(m => m.SyncPageModule),
+    canActivate: [AuthGuard]
   },
 
 ];

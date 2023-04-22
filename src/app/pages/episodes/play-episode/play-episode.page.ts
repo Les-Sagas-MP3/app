@@ -117,8 +117,8 @@ export class PlayEpisodePage implements OnInit {
   }
 
   coverUrl(): string {
-    if (this.saga.coverUrl) {
-      return this.configService.get('appUrl') + this.saga.coverUrl;
+    if(this.saga.coverUrl) {
+      return this.configService.get('apiUrl') + "/files/image" + this.saga.coverUrl;
     } else {
       return '';
     }
