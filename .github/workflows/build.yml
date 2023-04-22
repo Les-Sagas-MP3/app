@@ -8,11 +8,11 @@ jobs:
     name: Ionic Build
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js 16.x
-      uses: actions/setup-node@v1
+    - uses: actions/checkout@v3
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v3
       with:
-        node-version: 16.x
+        node-version: 18.x
     - run: npm ci
     - run: npm run build --if-present
 
@@ -20,11 +20,11 @@ jobs:
     name: Generate APK
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js 16.x
-      uses: actions/setup-node@v1
+    - uses: actions/checkout@v3
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v3
       with:
-        node-version: 16.x
+        node-version: 18.x
     - name: Install node modules
       run: npm install && npm run build
     - name: Use coturiv/setup-ionic
@@ -36,7 +36,7 @@ jobs:
     - name: Sync Ionic with Android
       run: ionic cap sync
     - name: Set up JDK
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v3
       with:
         distribution: 'adopt'
         java-version: '11'
