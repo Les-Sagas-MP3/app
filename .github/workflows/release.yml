@@ -52,7 +52,7 @@ jobs:
     - name: Use coturiv/setup-ionic
       uses: coturiv/setup-ionic@v1
       with:
-        ionic-version: 7.0.3
+        ionic-version: 7.0.1
     - name: Copy assets to Android
       run: ionic build --configuration=production
     - name: Sync Ionic with Android
@@ -96,7 +96,7 @@ jobs:
     - name: Use coturiv/setup-ionic
       uses: coturiv/setup-ionic@v1
       with:
-        ionic-version: 7.0.3
+        ionic-version: 7.0.1
     - name: Copy assets to Android
       run: ionic build --configuration=production
     - name: Sync Ionic with Android
