@@ -31,7 +31,6 @@ jobs:
         name: Login to Google Cloud
         uses: google-github-actions/auth@v1
         with:
-          token_format: 'access_token'
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
       - id: upload_artifact
         name: Upload jar in Cloud Storage
