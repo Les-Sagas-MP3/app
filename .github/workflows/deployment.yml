@@ -14,38 +14,39 @@ jobs:
       id-token: 'write'
       pull-requests: 'write'
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Get the version
         id: get_version
-        run: "echo ::set-output name=VERSION::$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]')"
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v1
+        run: |
+          echo VERSION="$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]')" >> $GITHUB_OUTPUT
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: 18.x
       - run: npm install
       - run: npm ci
       - run: npm run build --configuration=production
       - run: tar czf www.tar.gz www
       - id: auth_google
         name: Login to Google Cloud
-        uses: google-github-actions/auth@v0
+        uses: google-github-actions/auth@v1
         with:
           token_format: 'access_token'
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
       - id: upload_artifact
         name: Upload jar in Cloud Storage
-        uses: google-github-actions/upload-cloud-storage@v0
+        uses: google-github-actions/upload-cloud-storage@v1
         with:
           path: '${{ github.workspace }}/www.tar.gz'
           destination: 'les-sagas-mp3-build/review-app-${{ github.event.number }}'
           predefinedAcl: publicRead
       - name: Get subnetwork CIDR
         id: get_subnetwork_cidr
-        run: echo ::set-output name=CIDR::10.3.$(expr ${{ github.event.number }} % 255).0/24
+        run: echo "CIDR=10.3.$(expr ${{ github.event.number }} % 255).0/24" >> $GITHUB_OUTPUT
       - name: Start Google Cloud Build trigger
         id: trigger_deploy
         run: |
-          echo ::set-output name=DEPLOY_ID::$(curl --location --request POST 'https://content-cloudbuild.googleapis.com/v1/projects/les-sagas-mp3/triggers/fce3757a-1b5f-48ce-9321-8f88d6f5278d:run' \
+          echo "DEPLOY_ID=$(curl --location --request POST 'https://content-cloudbuild.googleapis.com/v1/projects/les-sagas-mp3/triggers/fce3757a-1b5f-48ce-9321-8f88d6f5278d:run' \
             --header 'Authorization: Bearer ${{ steps.auth_google.outputs.access_token }}' \
             --header 'Content-Type: application/json' \
               --data-raw '{
@@ -58,9 +59,9 @@ jobs:
               "_GITHUB_PR": "${{ github.event.number }}",
               "_GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}"
             }
-            }' | jq -r '.metadata.build.id')
+            }' | jq -r '.metadata.build.id')" >> $GITHUB_OUTPUT
       - name: Comment PR
-        uses: thollander/actions-comment-pull-request@v1
+        uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
             The following deployment request has been submitted to @Thomah :

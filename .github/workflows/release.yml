@@ -13,13 +13,14 @@ jobs:
     outputs:
       version: ${{ steps.get_version.outputs.VERSION }}
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Get the version
       id: get_version
-      run: "echo ::set-output name=VERSION::$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]')"
+      run: |
+        echo "VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]')" >> $GITHUB_OUTPUT
     - name: Get release
       id: get_release
-      run: echo ::set-output name=RELEASE_HTTP_CODE::$(curl -s -o out.html -w '%{http_code}'  https://github.com/les-sagas-mp3/app/releases/tag/${{ steps.get_version.outputs.VERSION }};)
+      run: echo "RELEASE_HTTP_CODE=$(curl -s -o out.html -w '%{http_code}'  https://github.com/les-sagas-mp3/app/releases/tag/${{ steps.get_version.outputs.VERSION }};)" >> $GITHUB_OUTPUT
     - name: Test release existence
       run: if [[ "${{ steps.get_release.outputs.RELEASE_HTTP_CODE }}" -eq "200" ]]; then exit 1; else exit 0; fi
 
@@ -28,11 +29,11 @@ jobs:
     name: Build Ionic
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js 16.x
-      uses: actions/setup-node@v1
+    - uses: actions/checkout@v3
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v3
       with:
-        node-version: 16.x
+        node-version: 18.x
     - run: npm ci
     - run: npm run build --configuration=production
 
@@ -41,23 +42,23 @@ jobs:
     name: Build Android
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js 16.x
-      uses: actions/setup-node@v1
+    - uses: actions/checkout@v3
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v3
       with:
-        node-version: 16.x
+        node-version: 18.x
     - name: Install node modules
       run: npm install
     - name: Use coturiv/setup-ionic
       uses: coturiv/setup-ionic@v1
       with:
-        ionic-version: 6.20.6
+        ionic-version: 7.0.3
     - name: Copy assets to Android
       run: ionic build --configuration=production
     - name: Sync Ionic with Android
       run: ionic cap sync
     - name: Set up JDK
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v3
       with:
         distribution: 'adopt'
         java-version: '11'
@@ -78,46 +79,24 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Config Git
       run: git config user.email "${{ secrets.GIT_CONFIG_EMAIL }}" && git config user.name "${{ secrets.GIT_CONFIG_NAME }}"
     - run: git tag ${{ needs.verify-version.outputs.version }}
     - run: git push origin ${{ needs.verify-version.outputs.version }}
-    - name: Create Release
-      uses: actions/create-release@v1
-      id: create_release
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v3
       with:
-        tag_name: ${{ needs.verify-version.outputs.version }}
-        release_name: ${{ needs.verify-version.outputs.version }}
-        body: |
-          Release ${{ needs.verify-version.outputs.version }}
-        draft: false
-        prerelease: false
-    - name: Use Node.js 16.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 16.x
+        node-version: 18.x
     - name: Install node modules
       run: npm install
     - run: npm ci
     - run: npm run build --configuration=production
     - run: tar czf www.tar.gz www
-    - name: Upload dist
-      id: upload-dist
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/www.tar.gz
-        asset_name: les-sagas-mp3.tar.gz
-        asset_content_type: application/gzip
     - name: Use coturiv/setup-ionic
       uses: coturiv/setup-ionic@v1
       with:
-        ionic-version: 6.20.6
+        ionic-version: 7.0.3
     - name: Copy assets to Android
       run: ionic build --configuration=production
     - name: Sync Ionic with Android
@@ -128,7 +107,7 @@ jobs:
       env:
         GOOGLE_SERVICES : ${{ secrets.GOOGLE_SERVICES }}
     - name: Set up JDK
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v3
       with:
         distribution: 'adopt'
         java-version: '11'
@@ -138,6 +117,20 @@ jobs:
         WORKSPACE: ${{ github.workspace }}
         GPG_DECRYPT_PASSPHRASE: ${{ secrets.GPG_DECRYPT_PASSPHRASE }}
         ANDROID_SIGNING_KEYSTORE_PASS: ${{ secrets.ANDROID_SIGNING_KEYSTORE_PASS }}
+    - name: Create Release
+      id: create_release
+      uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        name: ${{ needs.verify-version.outputs.version }}
+        tag_name: ${{ needs.verify-version.outputs.version }}
+        draft: false
+        prerelease: false
+        files: |
+          ${{ github.workspace }}/www.tar.gz
+          ${{ github.workspace }}/android/app/build/outputs/apk/release/app-release.apk
+
     - name: Upload APK
       id: upload-apk 
       uses: actions/upload-release-asset@v1
@@ -154,7 +147,7 @@ jobs:
     name: Build & Publish Docker
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         ref: '${{ needs.verify-version.outputs.version }}'
     - name: Build the Docker image
@@ -163,3 +156,24 @@ jobs:
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
     - name: Publish to Docker Hub
       run: docker push lessagasmp3/app:${{ needs.verify-version.outputs.version }}
+
+  deploy-production:
+    needs: [ verify-version, release ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout private tools
+        uses: actions/checkout@v3
+        with:
+          repository: les-sagas-mp3/infrastructure
+          token: ${{ secrets.PUSH_DEFAULT_VERSIONS_GITHUB_TOKEN }}
+          path: infrastructure
+      - name: Replace API version
+        run: sed -i -r "s/app_version = \".*\"/app_version = \"${{ needs.verify-version.outputs.version }}\"/g" infrastructure/terraform/environments/default_versions.tfvars
+      - name: Push new default version
+        run: |
+          cd infrastructure
+          git config user.email "${{ secrets.GIT_CONFIG_EMAIL }}" && git config user.name "${{ secrets.GIT_CONFIG_NAME }}"
+          git status
+          git add .
+          git commit --allow-empty -m "Release App '${{ needs.verify-version.outputs.version }}'"
+          git push
