@@ -42,6 +42,7 @@ export class EditEpisodePage implements OnInit {
       
       this.episodeForm = this.fb.group({
         seasonRef: ['', [Validators.required]],
+        displayedNumber: [''],
         number: [''],
         title: ['', [Validators.required]],
         infos: [''],
@@ -68,6 +69,12 @@ export class EditEpisodePage implements OnInit {
             if(this.episode.fileRef) {
               this.fileSource = "audio.mp3";
             }
+            const controls = this.episodeForm.controls;
+            controls['seasonRef'].setValue(this.episode.seasonRef);
+            controls['number'].setValue(this.episode.number);
+            controls['displayedNumber'].setValue(this.episode.displayedNumber);
+            controls['title'].setValue(this.episode.title);
+            controls['infos'].setValue(this.episode.infos);
             this.saga.seasons = Season.fromModels(results[1]);
             loading.dismiss();
           });
@@ -97,7 +104,8 @@ export class EditEpisodePage implements OnInit {
         episode.fileRef = this.episode.fileRef;
         episode.workspace = this.episode.workspace;
         episode.seasonRef = controls['seasonRef'].value;
-        episode.displayedNumber = controls['number'].value;
+        episode.number = controls['number'].value;
+        episode.displayedNumber = controls['displayedNumber'].value;
         episode.title = controls['title'].value;
         episode.infos = controls['infos'].value;
         if(controls['fileSource'].value) {
@@ -106,24 +114,28 @@ export class EditEpisodePage implements OnInit {
               console.debug(data);
               episode.fileRef = data.id;
               this.episodeService.update(episode)
-                .subscribe(data => {
-                  console.debug(data);
-                  this.navCtrl.navigateForward("sagas/" + this.saga.id)
+              .subscribe({
+                next: () => {
                   loading.dismiss();
-                }, error => {
+                  this.navCtrl.navigateForward("sagas/" + this.saga.id + "/episode/" + this.episode.id)
+                },
+                error: error => {
                   console.error(error);
                   loading.dismiss();
-                });
+                }
+              });
             });
         } else {
           this.episodeService.update(episode)
-          .subscribe(data => {
-            console.debug(data);
-            this.navCtrl.navigateForward("sagas/" + this.saga.id)
-            loading.dismiss();
-          }, error => {
-            console.error(error);
-            loading.dismiss();
+          .subscribe({
+            next: () => {
+              loading.dismiss();
+              this.navCtrl.navigateForward("sagas/" + this.saga.id + "/episode/" + this.episode.id)
+            },
+            error: error => {
+              console.error(error);
+              loading.dismiss();
+            }
           });
         }
       });

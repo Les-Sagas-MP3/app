@@ -20,28 +20,28 @@
         <ion-label>Informations</ion-label>
       </ion-list-header>
       <ion-item>
-        <ion-input label="Titre" labelPlacement="floating" type="string" value="{{ saga.title }}" formControlName="title"></ion-input>
+        <ion-input label="Titre" labelPlacement="floating" type="string" formControlName="title"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input label="URL" labelPlacement="floating" value="{{ saga.url }}" formControlName="url"></ion-input>
+        <ion-input label="URL" labelPlacement="floating" formControlName="url"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input label="URL Wiki" labelPlacement="floating" value="{{ saga.urlWiki }}" formControlName="urlWiki"></ion-input>
+        <ion-input label="URL Wiki" labelPlacement="floating" formControlName="urlWiki"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input label="Etat" labelPlacement="floating" value="{{ saga.status }}" formControlName="status"></ion-input>
+        <ion-input label="Etat" labelPlacement="floating" formControlName="status"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-textarea label="Synopsis" labelPlacement="floating" value="{{ saga.synopsis }}" formControlName="synopsis"></ion-textarea>
+        <ion-textarea label="Synopsis" labelPlacement="floating" formControlName="synopsis"></ion-textarea>
       </ion-item>
       <ion-item>
-        <ion-textarea label="Origine" labelPlacement="floating" value="{{ saga.origin }}" formControlName="origin"></ion-textarea>
+        <ion-textarea label="Origine" labelPlacement="floating" formControlName="origin"></ion-textarea>
       </ion-item>
       <ion-item>
-        <ion-textarea label="Génèse" labelPlacement="floating" value="{{ saga.genese }}" formControlName="genese"></ion-textarea>
+        <ion-textarea label="Génèse" labelPlacement="floating" formControlName="genese"></ion-textarea>
       </ion-item>
       <ion-item>
-        <ion-textarea label="Récompenses" labelPlacement="floating" value="{{ saga.awards }}" formControlName="awards"></ion-textarea>
+        <ion-textarea label="Récompenses" labelPlacement="floating" formControlName="awards"></ion-textarea>
       </ion-item>
       <ion-item>
         <ion-input label="Bannière" labelPlacement="floating" class="fileUpload" type="file" formControlName="banner" (change)="onBannerChange($event)">{{ bannerSource }}</ion-input>

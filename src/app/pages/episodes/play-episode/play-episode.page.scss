@@ -1,6 +1,11 @@
 #container {
     text-align: center;
     padding: 20px;
+    height: 95%;
+}
+
+.cover {
+    height: 20em;
 }
 
 ion-range {
@@ -16,13 +21,12 @@ p {
 }
 
 .flex_box {
-    height: 250px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-ion-button {
+.flex_box > ion-button {
     height: 50px;
     min-height: max-content;
     margin: 0px 7px;

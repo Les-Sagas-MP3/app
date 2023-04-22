@@ -36,13 +36,13 @@ export class EditSagaPage implements OnInit {
 
     this.sagaForm = this.fb.group({
       title: ['', [Validators.required]],
-      url: [],
-      urlWiki: [],
-      status: [],
-      synopsis: [],
-      origin: [],
-      genese: [],
-      awards: [],
+      url: [''],
+      urlWiki: [''],
+      status: [''],
+      synopsis: [''],
+      origin: [''],
+      genese: [''],
+      awards: [''],
       banner: [''],
       bannerSource: [''],
       cover: [''],
@@ -59,6 +59,15 @@ export class EditSagaPage implements OnInit {
       this.sagaService.getById(sagaId)
         .subscribe(data => {
           this.saga = Saga.fromModel(data);
+          const controls = this.sagaForm.controls;
+          controls['title'].setValue(this.saga.title);
+          controls['url'].setValue(this.saga.url);
+          controls['urlWiki'].setValue(this.saga.urlWiki);
+          controls['status'].setValue(this.saga.status);
+          controls['synopsis'].setValue(this.saga.synopsis);
+          controls['origin'].setValue(this.saga.origin);
+          controls['genese'].setValue(this.saga.genese);
+          controls['awards'].setValue(this.saga.awards);
           loading.dismiss();
         });
     });
@@ -76,8 +85,7 @@ export class EditSagaPage implements OnInit {
   updateSaga(loading: HTMLIonLoadingElement, saga: SagaModel) {
     this.sagaService.update(saga)
       .subscribe({
-        next: (data) => {
-          console.debug(data);
+        next: () => {
           loading.dismiss();
           this.navCtrl.navigateForward("sagas/" + this.saga.id)
         },
@@ -85,8 +93,7 @@ export class EditSagaPage implements OnInit {
           console.error(error);
           loading.dismiss();
         }
-      }
-      );
+      });
   }
 
   async save() {

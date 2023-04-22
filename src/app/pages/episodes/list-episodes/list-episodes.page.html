@@ -4,7 +4,12 @@
       <ion-menu-button></ion-menu-button>
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ saga.title }}</ion-title>
+    <ion-title *ngIf="season.name === null || season.name === ''">
+      Saison {{ season.number }}
+    </ion-title>
+    <ion-title *ngIf="season.name !== null && season.name !== ''">
+      {{ season.name }}
+    </ion-title>
     <ion-buttons slot="primary">
       <ion-button routerLink="/sagas/{{ saga.id }}/seasons/{{ season.id }}/edit" routerDirection="forward"
         *ngIf="authService.isLoggedIn()">
@@ -21,7 +26,7 @@
         <ion-icon name="play-outline"></ion-icon> {{ episode.displayedNumber }} - {{ episode.title }}
       </ion-label>
     </ion-item>
-    <ion-item button="true" (click)="addEpisode()" *ngIf="authService.currentTokenValue">
+    <ion-item button="true" (click)="addEpisode()" *ngIf="authService.isLoggedIn()">
         <ion-label>
             < Ajouter un épisode >
         </ion-label>

@@ -51,6 +51,9 @@ export class EditSeasonPage implements OnInit {
       forkJoin([saga, season]).subscribe(results => {
         this.saga = Saga.fromModel(results[0]);
         this.season = Season.fromModel(results[1]);
+        const controls = this.seasonForm.controls;
+        controls['number'].setValue(this.season.number);
+        controls['name'].setValue(this.season.name);
         loading.dismiss();
       });
     });

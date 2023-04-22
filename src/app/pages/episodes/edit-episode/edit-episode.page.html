@@ -9,7 +9,9 @@
         <ion-icon name="save"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>{{ saga.title }}</ion-title>
+    <ion-title>
+      Episode {{ episode.displayedNumber }}
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -20,20 +22,23 @@
         <ion-label>Informations</ion-label>
       </ion-list-header>
       <ion-item>
-        <ion-select label="Saison" labelPlacement="floating" value="{{ episode.seasonRef }}" formControlName="seasonRef">
+        <ion-select label="Saison" labelPlacement="floating" formControlName="seasonRef" value="{{ episode.seasonRef }}">
           <ion-select-option *ngFor="let season of saga.seasons" value="{{ season.id }}">
             {{ season.name === '' ? 'Saison ' + season.number : season.name }}
           </ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
-        <ion-input label="Numéro" labelPlacement="floating" type="string" value="{{ episode.displayedNumber }}" formControlName="number"></ion-input>
+        <ion-input label="Ordre" labelPlacement="floating" type="number" formControlName="number"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input label="Titre" labelPlacement="floating" type="string" value="{{ episode.title }}" formControlName="title"></ion-input>
+        <ion-input label="Numéro affiché" labelPlacement="floating" type="string" formControlName="displayedNumber"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-textarea label="Description" labelPlacement="floating" value="{{ episode.infos }}" formControlName="infos"></ion-textarea>
+        <ion-input label="Titre" labelPlacement="floating" type="string" formControlName="title"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-textarea label="Description" labelPlacement="floating" formControlName="infos"></ion-textarea>
       </ion-item>
       <ion-item>
         <ion-input label="Fichier audio" labelPlacement="floating" class="fileUpload" type="file" formControlName="file" (change)="onFileChange($event)">{{ fileSource }}</ion-input>
