@@ -60,8 +60,8 @@ jobs:
     - name: Set up JDK
       uses: actions/setup-java@v3
       with:
-        distribution: 'adopt'
-        java-version: '11'
+        distribution: 'temurin'
+        java-version: '20'
     - name: Release Android APK
       run: ./.release/release_android.sh
       env:
@@ -109,8 +109,8 @@ jobs:
     - name: Set up JDK
       uses: actions/setup-java@v3
       with:
-        distribution: 'adopt'
-        java-version: '11'
+        distribution: 'temurin'
+        java-version: '20'
     - name: Release Android APK
       run: ./.release/release_android.sh
       env:
