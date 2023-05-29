@@ -1,17 +1,19 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { APP_INITIALIZER, LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
+import { registerLocaleData } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
 
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { ConfigService } from './services/config/config.service';
-import { CategoryService } from './services/categories/category.service';
+
+import localeFr from '@angular/common/locales/fr';
+import localeFrExtra from '@angular/common/locales/extra/fr';
+registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
 
 const appConfig = (config: ConfigService) => {
   return () => {
@@ -24,12 +26,13 @@ const appConfig = (config: ConfigService) => {
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule],
+    ReactiveFormsModule,
+    DateFnsModule.forRoot()],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: LOCALE_ID, useValue: 'fr-FR'},
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     {
       provide: APP_INITIALIZER,
@@ -39,4 +42,4 @@ const appConfig = (config: ConfigService) => {
     }],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
