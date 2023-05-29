@@ -21,6 +21,10 @@ export class EpisodesService {
     return this.http.get<EpisodeModel[]>(`${this.configService.get('apiUrl')}/episode`, { params });
   }
 
+  getAllBySeasonId(seasonRef: number) {
+    return this.http.get<EpisodeModel[]>(`${this.configService.get('apiUrl')}/episode?seasonRef=${seasonRef}`);
+  }
+
   create(episode: EpisodeModel) {
     return this.http.post<EpisodeModel>(`${this.configService.get('apiUrl')}/episode`, episode);
   }

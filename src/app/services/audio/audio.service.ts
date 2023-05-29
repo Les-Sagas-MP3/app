@@ -1,8 +1,8 @@
 // src/app/services/audio.service.ts
+import { formatDate } from '@angular/common';
 import { Injectable } from "@angular/core";
 import { Observable, BehaviorSubject, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
-import * as moment from "moment";
 import { StreamState } from "src/app/interfaces/stream-state";
 
 @Injectable({
@@ -96,8 +96,12 @@ export class AudioService {
   }
 
   formatTime(time: number, format: string = "HH:mm:ss") {
-    const momentTime = time * 1000;
-    return moment.utc(momentTime).format(format);
+    var t = new Date(1970, 0, 1);
+    t.setSeconds(time);
+    return formatDate(t, format, 'en-US');
+    //parseISO(time)
+    //const momentTime = time * 1000;
+    //return moment.utc(momentTime).format(format);
   }
   
   private updateStateEvents(event: Event): void {

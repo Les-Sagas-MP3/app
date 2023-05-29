@@ -10,6 +10,7 @@ if (propsFile.exists()) {
 }
 
 android {
+    namespace "fr.lessagasmp3.app"
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "fr.lessagasmp3.app"

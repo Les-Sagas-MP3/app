@@ -22,7 +22,7 @@
     <ion-card-header class="ion-text-center">
       <ion-card-title>{{ episode.title }}</ion-card-title>
     </ion-card-header>
-    <div *ngIf="state.canplay">
+    <div *ngIf="state.canplay && episode.file.url">
       <ion-range #slider min="0" 
         [max]="state.duration" 
         [value]="!sliderBeingUpdated ? state.currentTime : 0"
@@ -35,13 +35,13 @@
       <ion-button shape="round" (click)="previous()" [disabled]="isFirstPlaying()">
         <ion-icon slot="icon-only" name="play-back"></ion-icon>
       </ion-button>
-      <ion-button shape="round" (click)="play()" [disabled]="state.error" *ngIf="!state?.playing && state.canplay">
+      <ion-button shape="round" (click)="play()" [disabled]="state.error" *ngIf="!state?.playing && state.canplay && episode.file.url">
         <ion-icon slot="icon-only" name="play"></ion-icon>
       </ion-button>
-      <ion-button shape="round" (click)="pause()" *ngIf="state?.playing">
+      <ion-button shape="round" (click)="pause()" *ngIf="state?.playing && episode.file.url">
         <ion-icon slot="icon-only" name="pause"></ion-icon>
       </ion-button>
-      <ion-button shape="round" (click)="next()" [disabled]="isLastPlaying()">
+      <ion-button shape="round" (click)="next()" [disabled]="isLastPlaying()" >
         <ion-icon slot="icon-only" name="play-forward"></ion-icon>
       </ion-button>
     </div>
