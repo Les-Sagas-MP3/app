@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { JwtResponseModel } from 'src/app/models/security/jwt.response.model';
 import { JwtRequestModel } from 'src/app/models/security/jwt.request.model';
-import { UserModel } from 'src/app/models/user.model';
+import { UserModel } from 'src/app/models/user/user.model';
 import { ConfigService } from '../config/config.service';
 
 @Injectable({

@@ -1,5 +1,5 @@
 import { APP_INITIALIZER, LOCALE_ID, NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { registerLocaleData } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -21,15 +21,16 @@ const appConfig = (config: ConfigService) => {
   };
 };
 
+bootstrapApplication(AppComponent);
+
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule,
-    DateFnsModule.forRoot()],
+    ReactiveFormsModule],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: 'fr-FR'},
@@ -40,6 +41,6 @@ const appConfig = (config: ConfigService) => {
       multi: true,
       deps: [ConfigService],
     }],
-  bootstrap: [AppComponent],
+  bootstrap: [],
 })
 export class AppModule {}

@@ -18,11 +18,18 @@
                   </ion-list-header>
 
                   <ion-menu-toggle auto-hide="false">
-                      <ion-item routerLink="/sync" routerLinkActive="selected" routerDirection="root" detail="false">
+                      <ion-item routerLink="/admin/sync" routerLinkActive="selected" routerDirection="root" detail="false">
                           <ion-icon slot="start" name="cog"></ion-icon>
                           <ion-label>Administration</ion-label>
                       </ion-item>
                   </ion-menu-toggle>
+
+                  <ion-menu-toggle auto-hide="false">
+                    <ion-item routerLink="/admin/users" routerLinkActive="selected" routerDirection="root" detail="false">
+                        <ion-icon slot="start" name="people"></ion-icon>
+                        <ion-label>Utilisateurs</ion-label>
+                    </ion-item>
+                </ion-menu-toggle>
 
                   <ion-menu-toggle autoHide="false">
                       <ion-item button (click)="logout()" detail="false" routerLinkActive="active" routerLinkActive="selected">

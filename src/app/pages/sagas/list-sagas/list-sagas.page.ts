@@ -34,8 +34,8 @@ export class ListSagasPage implements OnInit {
     }).then((loading) => {
       loading.present();
       let categoriesRequest = this.categoryService.getAll();
-      let authorsRequest = this.sagaService.getPaginated(this.numPage, this.sizePage);
-      forkJoin([categoriesRequest, authorsRequest]).subscribe(results => {
+      let sagasRequest = this.sagaService.getPaginated(this.numPage, this.sizePage);
+      forkJoin([categoriesRequest, sagasRequest]).subscribe(results => {
         this.items = Saga.fromModels(results[1].content);
         this.categories = Category.fromModels(results[0]);
         this.items = this.saveCategories(this.items);

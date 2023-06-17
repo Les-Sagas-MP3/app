@@ -24,9 +24,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "allowedCommonJsDependencies": [
-               "moment"
-            ],
+            "preserveSymlinks": true,
             "assets": [
               {
                 "glob": "**/*",

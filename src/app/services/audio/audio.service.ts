@@ -99,9 +99,6 @@ export class AudioService {
     var t = new Date(1970, 0, 1);
     t.setSeconds(time);
     return formatDate(t, format, 'en-US');
-    //parseISO(time)
-    //const momentTime = time * 1000;
-    //return moment.utc(momentTime).format(format);
   }
   
   private updateStateEvents(event: Event): void {

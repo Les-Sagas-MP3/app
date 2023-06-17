@@ -1,4 +1,6 @@
-export class UserModel {
+import { AuditModel } from "../audit.model";
+
+export class UserModel extends AuditModel {
     
     username: string = '';
     password: string = '';

@@ -55,9 +55,15 @@ export const routes: Routes = [
     loadChildren: () => import('./pages/signup/signup.module').then(m => m.SignupPageModule)
   },
   {
-    path: 'sync',
+    path: 'admin/sync',
     loadChildren: () => import('./pages/admin/sync/sync.module').then(m => m.SyncPageModule),
     canActivate: [AuthGuard]
   },
+  {
+    path: 'admin/users',
+    loadComponent: () => import('./pages/admin/users/list-users/list-users.page').then( m => m.ListUsersPage),
+    canActivate: [AuthGuard]
+  },
+
 
 ];
