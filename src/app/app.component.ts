@@ -48,4 +48,8 @@ export class AppComponent {
     this.authService.logout();
     this.navCtrl.navigateRoot('/news');
   }
+
+  get isAdmin() {
+    return this.authService.isAdmin;
+  }
 }

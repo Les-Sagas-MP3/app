@@ -60,24 +60,27 @@ export class LoginPage implements OnInit {
       }).then((loading) => {
         loading.present();
         this.authService.login(controls['email'].value, controls['password'].value)
-          .subscribe(res => {
-            if(res && res.token) {
-              localStorage.setItem('jwt', JSON.stringify(res));
-              this.authService.currentTokenValue = res;
-              this.loginForm.reset();
-              this.authService.whoami();
+          .subscribe({
+            next: (results) => {
+              if(results && results.token) {
+                localStorage.setItem('jwt', JSON.stringify(results));
+                this.authService.currentTokenValue = results;
+                this.loginForm.reset();
+                this.authService.whoami();
+                loading.dismiss();
+                this.navCtrl.navigateRoot('/news');
+              }
+              this.attemptedSubmit = false;
+            },
+            error: error => {
+              if(error.status == 401) {
+                toast.message = "Identifiants incorrects"
+                toast.present();
+              }
+              this.attemptedSubmit = false;
+              this.markFieldsDirty();
               loading.dismiss();
-              this.navCtrl.navigateRoot('/news');
             }
-            this.attemptedSubmit = false;
-          }, error => {
-            if(error.status == 401) {
-              toast.message = "Identifiants incorrects"
-              toast.present();
-            }
-            this.attemptedSubmit = false;
-            this.markFieldsDirty();
-            loading.dismiss();
           });
       });
     } else {

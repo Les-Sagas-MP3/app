@@ -14,6 +14,9 @@
 
   <form [formGroup]="signupForm" (ngSubmit)="signup()" novalidate>
     <ion-item>
+      <ion-input label="Pseudo" labelPlacement="floating" formControlName="username" type="string" name="username" required></ion-input>
+    </ion-item>
+    <ion-item>
       <ion-input label="Email" labelPlacement="floating" formControlName="email" type="email" name="email" required></ion-input>
     </ion-item>
     <ion-item>

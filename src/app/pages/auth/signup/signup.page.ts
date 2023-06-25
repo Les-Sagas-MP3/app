@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoadingController, NavController, ToastController } from '@ionic/angular';
+import { UserModel } from 'src/app/models/user/user.model';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
@@ -26,6 +27,7 @@ export class SignupPage implements OnInit {
     private toastController: ToastController,
     private authService: AuthService) {
     this.signupForm = this.fb.group({
+      username: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
@@ -54,22 +56,30 @@ export class SignupPage implements OnInit {
     });
     if (this.signupForm.valid) {      
       const controls = this.signupForm.controls;
+      let user = new UserModel();
+      user.username = controls['username'].value;
+      user.email = controls['email'].value;
+      user.password = controls['password'].value;
+
       this.loadingController.create({
         message: 'Enregistrement en cours...'
       }).then((loading) => {
         loading.present();
-        this.authService.signup(controls['email'].value, controls['password'].value)
-          .subscribe(res => {
-            this.signupForm.reset();
-            loading.dismiss();
-            this.navCtrl.navigateRoot('/news');
-            this.attemptedSubmit = false;
-          }, error => {
-            toast.message = "Erreur lors de l'enregistrement"
-            toast.present();
-            this.attemptedSubmit = false;
-            this.markFieldsDirty();
-            loading.dismiss();
+        this.authService.signup(user)
+          .subscribe({
+            next: () => {
+              this.signupForm.reset();
+              loading.dismiss();
+              this.navCtrl.navigateRoot('/news');
+              this.attemptedSubmit = false;
+            },
+            error: () => {
+              toast.message = "Erreur lors de l'enregistrement"
+              toast.present();
+              this.attemptedSubmit = false;
+              this.markFieldsDirty();
+              loading.dismiss();
+            }
           });
       });
     } else {
