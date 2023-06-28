@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, LoadingController } from '@ionic/angular';
+import { RouterModule } from '@angular/router';
+import { IonicModule, LoadingController, NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/users/user.service';
 import { User } from 'src/app/entities/user/user';
+import { UserModel } from 'src/app/models/user/user.model';
 
 @Component({
   selector: 'app-list-users',
   templateUrl: './list-users.page.html',
   styleUrls: ['./list-users.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule, RouterModule]
 })
 export class ListUsersPage implements OnInit {
 
@@ -22,6 +24,7 @@ export class ListUsersPage implements OnInit {
 
   constructor(
     public loadingController: LoadingController,
+    private navCtrl: NavController,
     public authService: AuthService,
     private userService: UserService) { }
 
@@ -69,5 +72,13 @@ export class ListUsersPage implements OnInit {
       });
   }
 
+  addUser() {
+    var item = new UserModel();
+    item.username = "Nouvel utilisateur";
+    this.userService.create(item)
+      .subscribe(data => {
+        this.navCtrl.navigateForward("admin/users/" + data.id)
+      });
+  }
 
 }

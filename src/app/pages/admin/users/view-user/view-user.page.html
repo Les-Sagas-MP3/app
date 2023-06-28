@@ -1,0 +1,47 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ user.username }}</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button routerLink="/admin/users/{{ user.id }}/edit" routerDirection="forward">
+        <ion-icon name="pencil"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="card">
+    <div class="header">
+      <div class="avatar">
+        <img src="https://ionicframework.com/docs/img/demos/avatar.svg" alt="Silhouette of a person's head" />
+      </div>
+    </div>
+  </div>
+  <ion-list>
+    <ion-list-header color="secondary">
+      <ion-label>Informations</ion-label>
+    </ion-list-header>
+    <ion-item lines="none">
+      <span slot="start">Pseudo</span>
+      <span>{{ user.username }}</span>
+    </ion-item>
+    <ion-item lines="none">
+      <span slot="start">Email</span>
+      <span>{{ user.email }}</span>
+    </ion-item>
+    <ion-item lines="none">
+      <span slot="start">Password</span>
+      <span>*****</span>
+    </ion-item>
+    <ion-list-header color="secondary">
+      <ion-label>Permissions</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let role of roles" lines="none">
+      <span slot="start">{{ role.name }}</span>
+      <span *ngIf="role.sagaRef > 0">(*)</span>
+    </ion-item>
+  </ion-list>
+</ion-content>

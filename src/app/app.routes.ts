@@ -64,6 +64,14 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/admin/users/list-users/list-users.page').then( m => m.ListUsersPage),
     canActivate: [AuthGuard]
   },
-
+  {
+    path: 'admin/users/:id',
+    loadComponent: () => import('./pages/admin/users/view-user/view-user.page').then( m => m.ViewUserPage)
+  },
+  {
+    path: 'admin/users/:id/edit',
+    loadComponent: () => import('./pages/admin/users/edit-user/edit-user.page').then( m => m.EditUserPage),
+    canActivate: [AuthGuard]
+  }
 
 ];

@@ -9,7 +9,6 @@ import { UserModel } from 'src/app/models/user/user.model';
   providedIn: 'root'
 })
 export class UserService {
-
   constructor(private http: HttpClient, private configService: ConfigService) { }
   
   getPaginated(offset: number, limit: number) : Observable<DataPage<UserModel>> {
@@ -19,8 +18,16 @@ export class UserService {
     return this.http.get<DataPage<UserModel>>(`${this.configService.get('apiUrl')}/user`, { params });
   }
 
+  getById(id: number) : Observable<UserModel>  {
+    return this.http.get<UserModel>(`${this.configService.get('apiUrl')}/user/${id}`);
+  }
+
   search(search: string): Observable<UserModel[]> {
     return this.http.get<UserModel[]>(`${this.configService.get('apiUrl')}/user?search=${search}`);
+  }
+
+  create(saga: UserModel) {
+    return this.http.post<UserModel>(`${this.configService.get('apiUrl')}/user`, saga);
   }
 
 }

@@ -1,0 +1,39 @@
+.card {
+    margin: 0 auto;
+
+    .header {
+        height: 200px;
+
+        .avatar {
+            width: 160px;
+            height: 160px;
+            position: relative;
+            margin: 0 auto;
+
+            img {
+                display: block;
+                border-radius: 50%;
+                position: absolute;
+                bottom: -22px;
+                border: 8px solid white;
+                background-color: #fff;
+            }
+        }
+    }
+}
+
+ion-list {
+    overflow: hidden;
+
+    .user-meta {
+        padding-top: 40px;
+
+
+        .country {
+            font-size: 90%;
+            color: #949ea6;
+            text-transform: uppercase;
+            margin: 0 auto;
+        }
+    }
+}
