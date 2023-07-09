@@ -16,7 +16,7 @@
   <div class="card">
     <div class="header">
       <div class="avatar">
-        <img src="https://ionicframework.com/docs/img/demos/avatar.svg" alt="Silhouette of a person's head" />
+        <img [src]="avatarUrl()" alt="Avatar" />
       </div>
     </div>
   </div>
@@ -37,7 +37,7 @@
       <span>*****</span>
     </ion-item>
     <ion-list-header color="secondary">
-      <ion-label>Permissions</ion-label>
+      <ion-label>Roles</ion-label>
     </ion-list-header>
     <ion-item *ngFor="let role of roles" lines="none">
       <span slot="start">{{ role.name }}</span>

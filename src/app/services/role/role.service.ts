@@ -15,4 +15,8 @@ export class RoleService {
     const params = new HttpParams().set('userId', userId);
     return this.http.get<RoleModel[]>(`${this.configService.get('apiUrl')}/role`, { params });
   }
+
+  delete(roleId: any): Observable<Boolean> {
+    return this.http.delete<Boolean>(`${this.configService.get('apiUrl')}/role/${roleId}`);
+  }
 }

@@ -1,13 +1,54 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>edit-user</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="primary">
+      <ion-button routerDirection="backward" *ngIf="authService.currentTokenValue" type="submit" (click)="save()">
+        <ion-icon name="save"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ user.username }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">edit-user</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <form [formGroup]="userForm" novalidate>
+    <ion-list lines="full" class="ion-no-margin">
+      <ion-item>
+        <ion-input label="Avatar" labelPlacement="floating" class="fileUpload" type="file" formControlName="avatar" (change)="onAvatarChange($event)">{{ avatarSource }}</ion-input>
+      </ion-item>
+      <ion-list-header lines="full" color="secondary">
+        <ion-label>Informations</ion-label>
+      </ion-list-header>
+      <ion-item>
+        <ion-input label="Pseudo" labelPlacement="floating" formControlName="username"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input label="Email" labelPlacement="floating" type="email" formControlName="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input label="Password" labelPlacement="floating" type="password" formControlName="password" placeholder="(Laisser vide pour ne pas changer)"></ion-input>
+      </ion-item>
+      <ion-list-header lines="full" color="secondary">
+        <ion-label>Roles</ion-label>
+      </ion-list-header>
+      <ion-item *ngFor="let role of roles" lines="none">
+        <span slot="start">{{ role.name }}</span>
+        <span *ngIf="role.sagaRef > 0">(*)</span>
+        <ion-button slot="end" (click)="deletePermission(role.id)">
+          <ion-icon name="trash-bin-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <ion-item>
+        <ion-select placeholder="Ajouter un role">
+          <ion-select-option *ngFor="let role of selectableRoles" value="{{ role }}">{{ role }}</ion-select-option>
+        </ion-select>
+        <ion-button slot="end">
+          <ion-icon name="add"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  </form>
 </ion-content>

@@ -47,8 +47,16 @@ export class ViewUserPage implements OnInit {
         error: () => {
           loading.dismiss();
         }
-      })
+      });
     });
+  }
+
+  avatarUrl(): string {
+    if(this.user.avatarUrl) {
+      return this.configService.get('apiUrl') + "/files/image" + this.user.avatarUrl;
+    } else {
+      return '';
+    }
   }
 
 }

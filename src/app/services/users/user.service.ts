@@ -26,8 +26,12 @@ export class UserService {
     return this.http.get<UserModel[]>(`${this.configService.get('apiUrl')}/user?search=${search}`);
   }
 
-  create(saga: UserModel) {
-    return this.http.post<UserModel>(`${this.configService.get('apiUrl')}/user`, saga);
+  create(user: UserModel) {
+    return this.http.post<UserModel>(`${this.configService.get('apiUrl')}/user`, user);
+  }
+
+  update(user: UserModel) {
+    return this.http.put<UserModel>(`${this.configService.get('apiUrl')}/user`, user);
   }
 
 }

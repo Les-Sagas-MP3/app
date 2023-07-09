@@ -14,6 +14,8 @@ export class User extends UserModel {
         entity.email = model.email;
         entity.enabled = model.enabled;
         entity.lastPasswordResetDate = model.lastPasswordResetDate;
+        entity.avatarUrl = model.avatarUrl;
+        entity.workspace = model.workspace;
         return entity;
     }
 

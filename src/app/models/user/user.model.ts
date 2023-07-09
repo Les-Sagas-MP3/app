@@ -7,5 +7,7 @@ export class UserModel extends AuditModel {
     email: string = '';
     enabled: boolean = false;
     lastPasswordResetDate: Date = new Date();
+    avatarUrl: string = '';
+    workspace: string = '';
 
 }
